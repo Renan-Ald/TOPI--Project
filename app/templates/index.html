@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <script>
+        async function login() {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: "user@example.com", password: "123456" })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem("token", data.access_token);
+                alert("Login realizado!");
+            } else {
+                alert("Erro: " + data.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Bem-vindo ao Flask API</h1>
+    <button onclick="login()">Login</button>
+</body>
+</html>

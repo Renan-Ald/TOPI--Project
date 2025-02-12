@@ -1,0 +1,122 @@
+/* Importação de fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Abel|Playfair+Display|Vibur');
+
+/* Reset de estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #E3FDF5;
+    --secondary-color: #FFE6FA;
+    --text-color: #333;
+    --input-bg: #ffffff;
+    --border-color: #ccc;
+    --button-bg: #28a745;
+    --button-hover: #218838;
+}
+
+/* Estilização do corpo */
+body {
+    background: linear-gradient(-225deg, var(--primary-color) 50%, var(--secondary-color) 50%);
+    background-attachment: fixed;
+    font-family: 'Abel', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container do formulário */
+form {
+    width: 400px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Cabeçalho do formulário */
+header {
+    margin-bottom: 20px;
+}
+
+header h2 {
+    font-size: 24px;
+    font-family: 'Playfair Display', serif;
+    color: #3e403f;
+}
+
+header p {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+/* Ajuste do campo de entrada */
+.field-set {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo dos campos de entrada */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Ícones dentro dos inputs */
+.input-group i {
+    color: var(--text-color);
+    margin-right: 10px;
+}
+
+/* Input e select estilizados */
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    background: none;
+}
+
+/* Ícone de mostrar/ocultar senha */
+#eye {
+    cursor: pointer;
+}
+
+/* Botão de login */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: white;
+    background: var(--button-bg);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: var(--button-hover);
+}
+
+/* Responsividade */
+@media (max-width: 450px) {
+    form {
+        width: 90%;
+    }
+}
+select.form-input option:first-child {
+    color: #aaa;
+}

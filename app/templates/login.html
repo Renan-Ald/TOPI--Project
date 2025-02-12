@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Link para o CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    
+    <!-- Ícones da FontAwesome (para os ícones de login) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="overlay">
+        <!-- Formulário de Login -->
+        <form method="POST" action="{{ url_for('routes.login') }}" id="loginForm">
+            <div class="con">
+                <!-- Cabeçalho do Formulário -->
+                <header class="head-form">
+                    <h2>Login</h2>
+                    <p>Faça login usando seu nome de usuário e senha</p>
+                </header>
+
+                <div class="field-set">
+                    <!-- Nome de usuário -->
+                    <div class="input-group">
+                        <i class="fa fa-user-circle"></i>
+                        <input class="form-input" id="txt-input" type="text" placeholder="@UserName" name="usuario" required>
+                    </div>
+                
+                    <!-- Senha -->
+                    <div class="input-group">
+                        <i class="fa fa-key"></i>
+                        <input class="form-input" type="password" placeholder="Password" id="pwd" name="senha" required>
+                        <i class="fa fa-eye" aria-hidden="true" id="eye"></i>
+                    </div>
+                
+                    <!-- Dropdown -->
+                    <div class="input-group">
+                        <i class="fa fa-cogs"></i>
+                        <select class="form-input" id="topiSelect">
+                            <option value="" disabled selected>Nome da Coligada</option>
+                            <option value="1">CIS</option>
+                            <option value="2">TOPI</option>
+                        </select>
+                    </div>
+                
+                    <!-- Botão de Login -->
+                    <button class="log-in" type="submit">Entrar</button>
+                </div>
+                
+                
+                <!-- Outros Botões -->
+                
+            </div>
+        </form>
+    </div>
+
+    <!-- Link para o JavaScript -->
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>
