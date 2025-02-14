@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Registrar Apontamento</h2>
-    <form method="POST">
+        <form method="POST">
         <label for="data">Data:</label>
         <input type="date" id="data" name="data" required><br>
 
@@ -21,7 +21,11 @@
         <input type="time" id="hr_int" name="hr_int" required><br>
 
         <label for="cod_coligada">Código Coligada:</label>
-        <input type="number" id="cod_coligada" name="cod_coligada" required><br>
+        <select id="cod_coligada" name="cod_coligada" required>
+            {% for coligada in coligada_data %}
+                <option value="{{ coligada['CODTAREFA'] }}">{{ coligada['DESCRICAO'] }}</option>
+            {% endfor %}
+        </select><br>
 
         <label for="cod_apontamento">Código Apontamento:</label>
         <input type="number" id="cod_apontamento" name="cod_apontamento" required><br>
@@ -30,7 +34,10 @@
         <input type="text" id="cod_ven" name="cod_ven" required><br>
 
         <label for="cod_projeto">Código Projeto:</label>
-        <input type="number" id="cod_projeto" name="cod_projeto" required><br>
+        <select id="cod_projeto" name="cod_projeto" required>
+            <option value="">Selecione um projeto</option>
+            <!-- Projetos serão populados aqui via JavaScript -->
+        </select><br>
 
         <label for="cod_tarefa">Código Tarefa:</label>
         <input type="number" id="cod_tarefa" name="cod_tarefa" required><br>
@@ -43,5 +50,29 @@
 
         <button type="submit">Enviar</button>
     </form>
+
+    <script>
+        // Função para obter os tipos de apontamento do projeto
+        function loadTiposDeApontamento(codColigada, codProjeto) {
+            const url = `https://portal.topiconsultoria.com.br:8051/api/framework/v1/consultaSQLServer/RealizaConsulta/APT.INT.006/0/T?parameters=CODCOLIGADA=${codColigada};CODPROJETO=${codProjeto}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Preencher o dropdown de tipos de apontamento aqui
+                    console.log(data);
+                    // (Aqui você pode adicionar a lógica para popular os tipos de apontamento, se necessário)
+                });
+        }
+
+        // Listener para quando o "Código Projeto" for alterado
+        document.getElementById('cod_projeto').addEventListener('change', function() {
+            const codProjeto = this.value;
+            const codColigada = document.getElementById('cod_coligada').value;
+            if (codProjeto && codColigada) {
+                loadTiposDeApontamento(codColigada, codProjeto);
+            }
+        });
+    </script>
 </body>
 </html>
