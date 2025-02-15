@@ -2,42 +2,87 @@ from flask import render_template, request, jsonify, session
 import requests
 
 # Definindo a URL base
-BASE_API_URL = "https://portal.topiconsultoria.com.br:8051/api/framework/v1/consultaSQLServer/RealizaConsulta"
+BASE_API_URL = "https://portal.topiconsultoria.com.br:8051/api/framework/v1/consultaSQLServer/RealizaConsulta/"
 API_URL = "https://portal.topiconsultoria.com.br:8051/RMSRestDataServer/rest/RMSPRJ4728832Server"
 
-def api_get(url):
-    """Função genérica para realizar GET com Bearer Token."""
-    token = session.get("access_token")
-    if not token:
-        return jsonify({"error": "Usuário não autenticado"}), 401
-    
-    headers = {"Authorization": f"Bearer {token}"}
-    response = requests.get(url, headers=headers)
-    
-    return response.json() if response.status_code == 200 else None
-
-def obter_dados_apontamento():
-    """Obtém os dados do apontamento baseado na coligada do usuário."""
+def projetos():
+    """Obtém a lista de projetos do usuário logado."""
+    usuario = session.get("user")
     coligada = session.get("coligada")
-    if not coligada:
-        return jsonify({"error": "Coligada não encontrada na sessão"}), 401
+    token = session.get("token")
     
-    url = f"{BASE_API_URL}/APT.INT.004/0/T?parameters=CODCOLIGADA={coligada}"
-    return api_get(url)
+    if usuario and coligada and token:
+        url = f"{BASE_API_URL}APT.INT.004/0/T?parameters=CODCOLIGADA={coligada}"
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            dados = response.json()
+            return dados if isinstance(dados, list) else []
+    return []
+
+def obter_dados_tarefa():  
+    """Obtém a lista de tarefas do usuário logado."""
+    usuario = session.get("user")
+    coligada = session.get("coligada")
+    token = session.get("token")
+
+    if usuario and coligada and token:
+        url = f"{BASE_API_URL}APT.INT.005/0/T?parameters=CODCOLIGADA={coligada}"
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            dados = response.json()
+            return dados if isinstance(dados, list) else []
+    return []
+
+def obter_apontamentos(cod_projeto):
+    """Obtém os apontamentos filtrados pelo CODPROJETO."""
+    usuario = session.get("user")
+    coligada = session.get("coligada")
+    token = session.get("token")
+
+    if usuario and coligada and token:
+        url = f"{BASE_API_URL}APT.INT.006/0/T?parameters=CODCOLIGADA={coligada};CODPROJETO={cod_projeto}"
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            return response.json() if isinstance(response.json(), list) else []
+    return []
+
+def get_apontamentos():
+    """Endpoint para retornar apontamentos com base no CODPROJETO."""
+    cod_projeto = request.args.get("cod_projeto")
+    if not cod_projeto:
+        return jsonify({"error": "CODPROJETO não fornecido"}), 400
+    
+    apontamentos = obter_apontamentos(cod_projeto)
+    return jsonify(apontamentos)    
 
 def apontamento_page():
-    """Página de apontamento que obtém os dados e permite envio via POST."""
-    coligada_data = obter_dados_apontamento()
-    
+    """Renderiza a página de apontamento com os dados do projeto e tarefa."""
+    dados_projeto = projetos()
+    dados_tarefa = obter_dados_tarefa()
+
+    return render_template('apontamento.html', dados_projeto=dados_projeto, dados_tarefa=dados_tarefa)
+
+# Novo método para criar um apontamento
+def criar_apontamento():
+    """Cria um novo apontamento com os dados recebidos do frontend."""
+    codven= session.get("CODVEN")
+    print("codigoven"+ codven)
     if request.method == "POST":
-        token = session.get("access_token")
+        token = session.get("token")
         if not token:
             return jsonify({"error": "Usuário não autenticado"}), 401
         
+        # Recebendo os dados do formulário
         payload = {
-            "CODCOLIGADA": int(request.form.get("cod_coligada")),
-            "CODAPONTAMENTO": int(request.form.get("cod_apontamento")),
-            "CODVEN": request.form.get("cod_ven"),
+            "ZMDAPONTAMENTO": [{
+            "CODCOLIGADA": int(session.get("coligada")),
+            "CODVEN": codven,
             "CODPROJETO": int(request.form.get("cod_projeto")),
             "CODTAREFA": int(request.form.get("cod_tarefa")),
             "DATA": request.form.get("data"),
@@ -45,9 +90,11 @@ def apontamento_page():
             "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
             "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
             "DESCRICAO": request.form.get("descricao"),
-            "CODTB1FAT": request.form.get("cod_tb1fat")
+            "CODTB1FAT": int(request.form.get("cod_apontamento"))
+        }]
         }
-        
+        print("Payload do Apontamento:")
+        print(payload)
         headers = {
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json"
@@ -59,5 +106,3 @@ def apontamento_page():
             return jsonify({"message": "Apontamento enviado com sucesso!"}), 200
         else:
             return jsonify({"error": "Erro ao enviar apontamento", "detalhes": response.text}), response.status_code
-    
-    return render_template("apontamento.html", coligada_data=coligada_data)

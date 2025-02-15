@@ -34,7 +34,8 @@ def obter_dados_usuario():
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
-            dados = response.json()
+            dados = response.json() 
+            session["CODVEN"] = dados[0]["CODVEN"]
             return dados[0] if isinstance(dados, list) and dados else None
     return None
 
@@ -45,7 +46,7 @@ def obter_dados_periodo(data_de, data_ate):
     token = session.get("token")
 
     if usuario and coligada and token:
-        url = f"{BASE_URL}APT.INT.002/0/T?parameters=CODCOLIGADA={coligada};USUARIO=wilson.sousa;DATADE_D={data_de};DATAATE_D={data_ate}"
+        url = f"{BASE_URL}APT.INT.002/0/T?parameters=CODCOLIGADA={coligada};USUARIO={usuario};DATADE_D={data_de};DATAATE_D={data_ate}"
         headers = {"Authorization": f"Bearer {token}"}
         response = requests.get(url, headers=headers)
 

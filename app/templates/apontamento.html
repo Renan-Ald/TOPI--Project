@@ -4,75 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apontamento</title>
-</head>
-<body>
-    <h2>Registrar Apontamento</h2>
-        <form method="POST">
-        <label for="data">Data:</label>
-        <input type="date" id="data" name="data" required><br>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJf4T2Qt5xC8O6NqftSf6Lrkf8tSTuSO9wNEtTyzlb3muQzlmzqlfPiFlvFG" crossorigin="anonymous">
 
-        <label for="hr_ini">Hora Início:</label>
-        <input type="time" id="hr_ini" name="hr_ini" required><br>
-
-        <label for="hr_fim">Hora Fim:</label>
-        <input type="time" id="hr_fim" name="hr_fim" required><br>
-
-        <label for="hr_int">Intervalo:</label>
-        <input type="time" id="hr_int" name="hr_int" required><br>
-
-        <label for="cod_coligada">Código Coligada:</label>
-        <select id="cod_coligada" name="cod_coligada" required>
-            {% for coligada in coligada_data %}
-                <option value="{{ coligada['CODTAREFA'] }}">{{ coligada['DESCRICAO'] }}</option>
-            {% endfor %}
-        </select><br>
-
-        <label for="cod_apontamento">Código Apontamento:</label>
-        <input type="number" id="cod_apontamento" name="cod_apontamento" required><br>
-
-        <label for="cod_ven">Código Vendedor:</label>
-        <input type="text" id="cod_ven" name="cod_ven" required><br>
-
-        <label for="cod_projeto">Código Projeto:</label>
-        <select id="cod_projeto" name="cod_projeto" required>
-            <option value="">Selecione um projeto</option>
-            <!-- Projetos serão populados aqui via JavaScript -->
-        </select><br>
-
-        <label for="cod_tarefa">Código Tarefa:</label>
-        <input type="number" id="cod_tarefa" name="cod_tarefa" required><br>
-
-        <label for="descricao">Descrição:</label>
-        <input type="text" id="descricao" name="descricao" required><br>
-
-        <label for="cod_tb1fat">Código TB1FAT:</label>
-        <input type="text" id="cod_tb1fat" name="cod_tb1fat" required><br>
-
-        <button type="submit">Enviar</button>
-    </form>
-
-    <script>
-        // Função para obter os tipos de apontamento do projeto
-        function loadTiposDeApontamento(codColigada, codProjeto) {
-            const url = `https://portal.topiconsultoria.com.br:8051/api/framework/v1/consultaSQLServer/RealizaConsulta/APT.INT.006/0/T?parameters=CODCOLIGADA=${codColigada};CODPROJETO=${codProjeto}`;
-            
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    // Preencher o dropdown de tipos de apontamento aqui
-                    console.log(data);
-                    // (Aqui você pode adicionar a lógica para popular os tipos de apontamento, se necessário)
-                });
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
         }
 
-        // Listener para quando o "Código Projeto" for alterado
-        document.getElementById('cod_projeto').addEventListener('change', function() {
-            const codProjeto = this.value;
-            const codColigada = document.getElementById('cod_coligada').value;
-            if (codProjeto && codColigada) {
-                loadTiposDeApontamento(codColigada, codProjeto);
-            }
+        h1 {
+            color: #3e4e56;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container select, .form-container input, .form-container button {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+
+        .select-container {
+            margin-bottom: 20px;
+        }
+
+        .select-container select {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Selecione um Projeto</h1>
+            <div class="select-container">
+                <select id="selectProjeto" class="form-select">
+                    <option value="">Escolha um projeto...</option>
+                    {% for projeto in dados_projeto %}
+                        <option value="{{ projeto.CODPROJETO }}">{{ projeto.DESCRICAO }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <h1>Selecione uma Tarefa</h1>
+            <div class="select-container">
+                <select id="selectTarefa" class="form-select">
+                    <option value="">Escolha uma tarefa...</option>
+                    {% for tarefa in dados_tarefa %}
+                        <option value="{{ tarefa.CODTAREFA }}" data-codprojeto="{{ tarefa.CODPROJETO }}">{{ tarefa.DESCRICAO }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <h1>Selecione um Apontamento</h1>
+            <div class="select-container">
+                <select id="selectApontamento" class="form-select">
+                    <option value="">Escolha um apontamento...</option>
+                </select>
+            </div>
+
+            <h1>Criar Novo Apontamento</h1>
+            <form id="formApontamento">
+                <div class="form-group">
+                    <label for="descricao">Descrição:</label>
+                    <input type="text" id="descricao" name="descricao" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="data">Data:</label>
+                    <input type="date" id="data" name="data" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="hr_ini">Hora de Início:</label>
+                    <input type="time" id="hr_ini" name="hr_ini" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="hr_fim">Hora de Fim:</label>
+                    <input type="time" id="hr_fim" name="hr_fim" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="hr_int">Hora de Intervalo:</label>
+                    <input type="time" id="hr_int" name="hr_int" class="form-control" required>
+                </div>
+
+                <!-- Campos escondidos para cod_projeto, cod_tarefa e cod_apontamento -->
+                <input type="hidden" id="cod_projeto" name="cod_projeto">
+                <input type="hidden" id="cod_tarefa" name="cod_tarefa">
+                <input type="hidden" id="cod_apontamento" name="cod_apontamento">
+
+                <button type="submit" class="btn-custom">Criar Apontamento</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Quando o projeto for selecionado
+            $("#selectProjeto").change(function () {
+                var codProjeto = $(this).val();
+                console.log("Projeto selecionado:", codProjeto); // Adicionando log para verificar a seleção
+    
+                if (codProjeto) {
+                    // Atualizando o campo escondido com o valor correto
+                    $("#cod_projeto").val(codProjeto);
+                    console.log("Campo escondido cod_projeto atualizado:", $("#cod_projeto").val());
+    
+                    $.ajax({
+                        url: "/get_apontamentos",
+                        type: "GET",
+                        data: { cod_projeto: codProjeto },
+                        success: function (data) {
+                            $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
+                            data.forEach(function (apontamento) {
+                                $("#selectApontamento").append(`<option value="${apontamento.CODIGO}">${apontamento.DESCRICAO}</option>`);
+                            });
+                        }
+                    });
+                } else {
+                    $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
+                    $("#cod_projeto").val(''); // Limpar o campo escondido se não houver projeto selecionado
+                    console.log("Campo escondido cod_projeto limpo");
+                }
+            });
+    
+            // Quando a tarefa for selecionada
+            $("#selectTarefa").change(function () {
+                var codTarefa = $(this).val();
+                var codProjeto = $("#selectProjeto").val();  // Agora pegamos o código do projeto diretamente do select
+    
+                console.log("Tarefa selecionada:", codTarefa);
+                console.log("Código do Projeto associado:", codProjeto);
+    
+                if (codTarefa && codProjeto) {
+                    // Atualiza o campo escondido com o valor correto
+                    $("#cod_tarefa").val(codTarefa);
+                    console.log("Campo escondido cod_tarefa atualizado:", $("#cod_tarefa").val());
+                } else {
+                    $("#cod_tarefa").val('');  // Limpa o campo caso a tarefa ou projeto não estejam selecionados
+                    console.log("Campo escondido cod_tarefa limpo");
+                }
+            });
+    
+            // Quando o apontamento for selecionado
+            $("#selectApontamento").change(function () {
+                var codApontamento = $(this).val();
+    
+                console.log("Apontamento selecionado:", codApontamento);
+    
+                // Preencher o campo escondido com o valor do apontamento
+                if (codApontamento) {
+                    $("#cod_apontamento").val(codApontamento);
+                    console.log("Campo escondido cod_apontamento preenchido:", $("#cod_apontamento").val());
+                } else {
+                    $("#cod_apontamento").val('');
+                    console.log("Campo escondido cod_apontamento limpo");
+                }
+            });
+    
+            // Função para enviar o novo apontamento via POST
+            $("#formApontamento").submit(function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+    
+                var formData = $(this).serialize(); // Obtém os dados do formulário
+    
+                // Exibe os dados que serão enviados no console
+                console.log("Dados do Formulário antes do envio:", formData);
+    
+                // Verificando se os campos essenciais foram preenchidos
+                if ($("#cod_projeto").val() && $("#cod_tarefa").val() && $("#descricao").val() && $("#data").val()) {
+                    $.ajax({
+                        url: "/criar_apontamento",  // Rota que você criou no Flask
+                        type: "POST",
+                        data: formData,
+                        success: function (response) {
+                            alert(response.message);
+                        },
+                        error: function (error) {
+                            alert(error.responseJSON.error);
+                        }
+                    });
+                } else {
+                    alert("Todos os campos necessários devem ser preenchidos!");
+                }
+            });
         });
-    </script>
+    </script>  
+
 </body>
 </html>
