@@ -68,6 +68,13 @@ def apontamento_page():
 
     return render_template('apontamento.html', dados_projeto=dados_projeto, dados_tarefa=dados_tarefa)
 
+def apontamento_page_edit():
+    """Renderiza a página de apontamento com os dados do projeto e tarefa."""
+    dados_projeto = projetos()
+    dados_tarefa = obter_dados_tarefa()
+
+    return render_template('apontamento_edit.html', dados_projeto=dados_projeto, dados_tarefa=dados_tarefa)
+
 # Novo método para criar um apontamento
 def criar_apontamento():
     """Cria um novo apontamento com os dados recebidos do frontend."""
@@ -106,3 +113,42 @@ def criar_apontamento():
             return jsonify({"message": "Apontamento enviado com sucesso!"}), 200
         else:
             return jsonify({"error": "Erro ao enviar apontamento", "detalhes": response.text}), response.status_code
+        
+# Novo método para editar um apontamento
+def editar_apontamento():
+    """Edita um novo apontamento com os dados recebidos do frontend."""
+    codven= session.get("CODVEN")
+    print("codigoven"+ codven)
+    if request.method == "PUT":
+        token = session.get("token")
+        if not token:
+            return jsonify({"error": "Usuário não autenticado"}), 401
+        
+        # Recebendo os dados do formulário
+        payload = {
+            "ZMDAPONTAMENTO": [{
+            "CODCOLIGADA": int(session.get("coligada")),
+            "CODVEN": codven,
+            "CODPROJETO": int(request.form.get("cod_projeto")),
+            "CODTAREFA": int(request.form.get("cod_tarefa")),
+            "DATA": request.form.get("data"),
+            "HRINI": f"{request.form.get('data')}T{request.form.get('hr_ini')}:00-03:00",
+            "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
+            "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
+            "DESCRICAO": request.form.get("descricao"),
+            "CODTB1FAT": int(request.form.get("cod_apontamento"))
+        }]
+        }
+        print("Payload do Apontamento:")
+        print(payload)
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+        
+        response = requests.post(API_URL, json=payload, headers=headers)
+        
+        if response.status_code == 200:
+            return jsonify({"message": "Apontamento editado com sucesso!"}), 200
+        else:
+            return jsonify({"error": "Erro ao editar apontamento", "detalhes": response.text}), response.status_code

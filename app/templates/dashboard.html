@@ -75,6 +75,7 @@
                                 <th>Hora Fim</th>
                                 <th>Intervalo</th>
                                 <th>Horas Totais</th>
+                                <th>Acoes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,6 +90,7 @@
                                     <td>{{ item.HRFIM }}</td>
                                     <td>{{ item.HRINT }}</td>
                                     <td>{{ item.HRTOT }}</td>
+                                    <td><button href="{{ url_for('routes.apontamento_page_edit') }}">Editar</button></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
