@@ -48,8 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             console.log("Coligada salva:", data);
-
-            // Agora enviar os dados de login
             return fetch(loginForm.action, {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
