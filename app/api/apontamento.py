@@ -52,6 +52,21 @@ def obter_apontamentos(cod_projeto):
             return response.json() if isinstance(response.json(), list) else []
     return []
 
+def obter_apontamento(codcoligada, codapontamento):
+    """Obtém os apontamentos filtrados pelo CODPROJETO."""
+    usuario = session.get("user")
+    coligada = session.get("coligada")
+    token = session.get("token")
+
+    if usuario and coligada and token:
+        url = f"{API_URL}/{coligada}$_${codapontamento}"
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            return response.json() if isinstance(response.json(), list) else []
+    return []
+
 def get_apontamentos():
     """Endpoint para retornar apontamentos com base no CODPROJETO."""
     cod_projeto = request.args.get("cod_projeto")
@@ -60,6 +75,17 @@ def get_apontamentos():
     
     apontamentos = obter_apontamentos(cod_projeto)
     return jsonify(apontamentos)    
+
+def get_apontamento():
+    """Endpoint para retornar apontamento com base no CODAPONTAMENTO."""
+    codcoligada = request.args.get('codcoligada')
+    codapontamento = request.args.get('codapontamento')
+
+    if not codcoligada or not codapontamento:
+        return jsonify({"error": "CODCOLIGADA ou CODAPONTAMENTO não fornecido"}), 400
+    
+    apontamento = obter_apontamento(codcoligada,codapontamento)
+    return jsonify(apontamento)    
 
 def apontamento_page():
     """Renderiza a página de apontamento com os dados do projeto e tarefa."""
@@ -73,7 +99,17 @@ def apontamento_page_edit():
     dados_projeto = projetos()
     dados_tarefa = obter_dados_tarefa()
 
-    return render_template('apontamento_edit.html', dados_projeto=dados_projeto, dados_tarefa=dados_tarefa)
+    codcoligada = request.args.get('codcoligada')
+    codapontamento = request.args.get('codapontamento')
+    # Aqui você pode carregar os dados com base nos parâmetros recebidos
+
+    return render_template(
+        'apontamento_edit.html',
+        dados_projeto=dados_projeto,
+        dados_tarefa=dados_tarefa,
+        codcoligada=codcoligada,
+        codapontamento=codapontamento
+    )
 
 # Novo método para criar um apontamento
 def criar_apontamento():
@@ -116,7 +152,7 @@ def criar_apontamento():
         
 # Novo método para editar um apontamento
 def editar_apontamento():
-    """Edita um novo apontamento com os dados recebidos do frontend."""
+    """Edita um sapontamento com os dados recebidos do frontend."""
     codven= session.get("CODVEN")
     print("codigoven"+ codven)
     if request.method == "PUT":

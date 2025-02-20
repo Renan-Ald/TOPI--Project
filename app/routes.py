@@ -11,7 +11,7 @@ routes.route("/dashboard")(dashboard)
 routes.route("/logout")(logout)
 routes.route("/salvar-coligada", methods=["GET", "POST"])(salvar_coligada)
 routes.route("/apontamento", methods=["GET", "POST"])(apontamento_page)  # Adicionando a rota de apontamento
-routes.route("/apontamento_edit", methods=["GET", "POST"])(apontamento_page_edit) 
+routes.route("/apontamento_edit", methods=["GET", "PUT"])(apontamento_page_edit) 
 routes.route('/get_apontamentos', methods=['GET'])(get_apontamentos)
 routes.route('/criar_apontamento', methods=['POST'])(criar_apontamento)
 routes.route('/editar_apontamento', methods=['POST'])(editar_apontamento)

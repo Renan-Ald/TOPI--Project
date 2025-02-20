@@ -90,7 +90,12 @@
                                     <td>{{ item.HRFIM }}</td>
                                     <td>{{ item.HRINT }}</td>
                                     <td>{{ item.HRTOT }}</td>
-                                    <td><a href="{{ url_for('routes.apontamento_page_edit') }}">Editar</a></td>
+                                    <td>
+                                        <a href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
+                                           style="display: inline-block; padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                                           Editar
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
