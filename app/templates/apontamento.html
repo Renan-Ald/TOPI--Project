@@ -6,7 +6,10 @@
     <title>Apontamento</title>
     
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJf4T2Qt5xC8O6NqftSf6Lrkf8tSTuSO9wNEtTyzlb3muQzlmzqlfPiFlvFG" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -28,10 +31,6 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container select, .form-container input, .form-container button {
-            width: 100%;
         }
 
         .form-group {
@@ -59,8 +58,11 @@
             margin-bottom: 20px;
         }
 
-        .select-container select {
-            margin-top: 10px;
+        /* Ajuste para Select2 */
+        .select2-container .select2-selection--single {
+            height: 38px;
+            padding: 5px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -70,7 +72,7 @@
         <div class="form-container">
             <h1>Selecione um Projeto</h1>
             <div class="select-container">
-                <select id="selectProjeto" class="form-select">
+                <select id="selectProjeto" class="form-select select2">
                     <option value="">Escolha um projeto...</option>
                     {% for projeto in dados_projeto %}
                         <option value="{{ projeto.CODPROJETO }}">{{ projeto.DESCRICAO }}</option>
@@ -80,7 +82,7 @@
 
             <h1>Selecione uma Tarefa</h1>
             <div class="select-container">
-                <select id="selectTarefa" class="form-select">
+                <select id="selectTarefa" class="form-select select2">
                     <option value="">Escolha uma tarefa...</option>
                     {% for tarefa in dados_tarefa %}
                         <option value="{{ tarefa.CODTAREFA }}" data-codprojeto="{{ tarefa.CODPROJETO }}">{{ tarefa.DESCRICAO }}</option>
@@ -90,7 +92,7 @@
 
             <h1>Selecione um Apontamento</h1>
             <div class="select-container">
-                <select id="selectApontamento" class="form-select">
+                <select id="selectApontamento" class="form-select select2">
                     <option value="">Escolha um apontamento...</option>
                 </select>
             </div>
@@ -135,19 +137,27 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function () {
+            // Aplicar Select2 aos selects
+            $(".select2").select2({
+                width: '100%',
+                placeholder: "Selecione uma opção",
+                allowClear: true
+            });
+
             // Quando o projeto for selecionado
             $("#selectProjeto").change(function () {
                 var codProjeto = $(this).val();
-                console.log("Projeto selecionado:", codProjeto); // Adicionando log para verificar a seleção
-    
+                $("#cod_projeto").val(codProjeto);
+
                 if (codProjeto) {
-                    // Atualizando o campo escondido com o valor correto
-                    $("#cod_projeto").val(codProjeto);
-                    console.log("Campo escondido cod_projeto atualizado:", $("#cod_projeto").val());
-    
                     $.ajax({
                         url: "/get_apontamentos",
                         type: "GET",
@@ -157,62 +167,36 @@
                             data.forEach(function (apontamento) {
                                 $("#selectApontamento").append(`<option value="${apontamento.CODIGO}">${apontamento.DESCRICAO}</option>`);
                             });
+                            $("#selectApontamento").trigger("change");
                         }
                     });
                 } else {
                     $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
-                    $("#cod_projeto").val(''); // Limpar o campo escondido se não houver projeto selecionado
-                    console.log("Campo escondido cod_projeto limpo");
+                    $("#cod_projeto").val('');
                 }
             });
-    
+
             // Quando a tarefa for selecionada
             $("#selectTarefa").change(function () {
                 var codTarefa = $(this).val();
-                var codProjeto = $("#selectProjeto").val();  // Agora pegamos o código do projeto diretamente do select
-    
-                console.log("Tarefa selecionada:", codTarefa);
-                console.log("Código do Projeto associado:", codProjeto);
-    
-                if (codTarefa && codProjeto) {
-                    // Atualiza o campo escondido com o valor correto
-                    $("#cod_tarefa").val(codTarefa);
-                    console.log("Campo escondido cod_tarefa atualizado:", $("#cod_tarefa").val());
-                } else {
-                    $("#cod_tarefa").val('');  // Limpa o campo caso a tarefa ou projeto não estejam selecionados
-                    console.log("Campo escondido cod_tarefa limpo");
-                }
+                $("#cod_tarefa").val(codTarefa);
             });
-    
+
             // Quando o apontamento for selecionado
             $("#selectApontamento").change(function () {
                 var codApontamento = $(this).val();
-    
-                console.log("Apontamento selecionado:", codApontamento);
-    
-                // Preencher o campo escondido com o valor do apontamento
-                if (codApontamento) {
-                    $("#cod_apontamento").val(codApontamento);
-                    console.log("Campo escondido cod_apontamento preenchido:", $("#cod_apontamento").val());
-                } else {
-                    $("#cod_apontamento").val('');
-                    console.log("Campo escondido cod_apontamento limpo");
-                }
+                $("#cod_apontamento").val(codApontamento);
             });
-    
+
             // Função para enviar o novo apontamento via POST
             $("#formApontamento").submit(function (event) {
-                event.preventDefault(); // Impede o envio padrão do formulário
-    
-                var formData = $(this).serialize(); // Obtém os dados do formulário
-    
-                // Exibe os dados que serão enviados no console
-                console.log("Dados do Formulário antes do envio:", formData);
-    
-                // Verificando se os campos essenciais foram preenchidos
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
                 if ($("#cod_projeto").val() && $("#cod_tarefa").val() && $("#descricao").val() && $("#data").val()) {
                     $.ajax({
-                        url: "/criar_apontamento",  // Rota que você criou no Flask
+                        url: "/criar_apontamento",
                         type: "POST",
                         data: formData,
                         success: function (response) {

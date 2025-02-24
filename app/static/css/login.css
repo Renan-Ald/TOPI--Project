@@ -1,223 +1,290 @@
-/* Importação de fontes do Google Fonts */
-@import url('https://fonts.googleapis.com/css?family=Abel|Playfair+Display|Vibur');
+    /* Importação de fontes do Google Fonts */
+    @import url('https://fonts.googleapis.com/css?family=Abel|Playfair+Display|Vibur');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* Reset de estilos globais */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    /* Reset de estilos globais */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-:root {
-    --primary-color: #E3FDF5;
-    --secondary-color: #FFE6FA;
-    --input-bg: #ffffff;
-    --border-color: #ccc;
-    --button-bg: #2c32f3;
-    --button-hover: #4045e5;
-}
+    :root {
+        --primary-color: #E3FDF5;
+        --secondary-color: #FFE6FA;
+        --input-bg: #ffffff;
+        --border-color: #ccc;
+        --button-bg: #2c32f3;
+        --button-hover: #4045e5;
+    }
 
-/* Estilização do corpo */
-body {
-    background: linear-gradient(-225deg, var(--primary-color) 50%, var(--secondary-color) 50%);
-    background-attachment: fixed;
-    font-family: 'Abel', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    /* Estilização do corpo */
+    body {
+        
+        background-attachment: fixed;
+        font-family: 'Abel', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
-/* Container do formulário */
-form {
-    padding: 20px;
-    text-align: center;
-}
-
-/* Cabeçalho do formulário */
-header {
-    margin-bottom: 20px;
-}
-
-header h2 {
-    font-size: 24px;
-    font-family: 'Playfair Display', serif;
-    color: #3e403f;
-}
-
-header p {
-    font-size: 14px;
-    color: var(--text-color);
-}
-
-/* Ajuste do campo de entrada */
-.field-set {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Estilo dos campos de entrada */
-.input-group {
-    display: flex;
-    align-items: center;
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 10px;
-}
-
-/* Ícones dentro dos inputs */
-.input-group i {
-    color: var(--text-color);
-    margin-right: 10px;
-}
-
-/* Input e select estilizados */
-.form-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: var(--text-color);
-    background: none;
-}
-
-/* Ícone de mostrar/ocultar senha */
-#eye {
-    cursor: pointer;
-}
-
-/* Botão de login */
-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    color: white;
-    background: var(--button-bg);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: var(--button-hover);
-}
-
-/* Responsividade */
-@media (max-width: 450px) {
+    /* Container do formulário */
     form {
-        width: 90%;
+        padding: 20px;
+        text-align: center;
     }
-}
-select.form-input option:first-child {
-    color: #aaa;
-}
-.loader-container {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background-color: rgba(255, 255, 255, 0.2); /* Fundo quase transparente */
-    backdrop-filter: blur(8px); /* Efeito de desfoque */
-    display: grid;
-    place-content: center;
-    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
-    display: none;
-    color: white !important;
-}
 
-
-svg {
-    width: 20rem;
-}
-
-svg text {
-    font-family: 'Poppins', sans-serif !important;
-    line-height: 1.5;
-    font-size: 5rem;
-    stroke-width: 2;
-    letter-spacing: -6px;
-}
-
-svg text.text-body {
-    stroke: #f1ebeb !important;
-    animation: 4s infinite alternate animate-stroke;
-}
-
-svg text.dot {
-    fill: #333;
-    stroke: #333;
-    animation: 4s infinite alternate animate-dot;
-}
-
-@keyframes animate-stroke {
-    0% {
-        fill: transparent;
-        stroke: #333;
-        stroke-width: 3;
-        stroke-dashoffset: 25%;
-        stroke-dasharray: 0 32%;
+    /* Cabeçalho do formulário */
+    header {
+        margin-bottom: 20px;
     }
-    50% {
-        fill: transparent;
-        stroke: #333;
-        stroke-width: 3;
+
+    header h2 {
+        font-size: 24px;
+        font-family: 'Playfair Display', serif;
+        color: #3e403f;
     }
-    80%, 100% {
-        fill: #333;
-        stroke: transparent;
-        stroke-width: 0;
-        stroke-dashoffset: -25%;
-        stroke-dasharray: 32% 0;
+
+    header p {
+        font-size: 14px;
+        color: var(--text-color);
     }
-}
 
-@keyframes animate-dot {
-    0%, 60% {
-        opacity: 0;
+    /* Ajuste do campo de entrada */
+    .field-set {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
-    100% {
-        opacity: 1;
+
+    /* Estilo dos campos de entrada */
+    .input-group {
+        display: flex;
+        align-items: center;
+        background: var(--input-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        padding: 10px;
     }
-}
-.container {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-}
 
-/* Estilização do formulário de login */
-.form-container {
-    width: 40%;
-    max-width: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-    padding: 20px;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-}
+    /* Ícones dentro dos inputs */
+    .input-group i {
+        color: var(--text-color);
+        margin-right: 10px;
+    }
 
-.overlay {
-    width: 100%;
-}
+    /* Input e select estilizados */
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: var(--text-color);
+        background: none;
+    }
 
-/* Estilização do slide */
-.slider-container {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
+    /* Ícone de mostrar/ocultar senha */
+    #eye {
+        cursor: pointer;
+    }
 
-.swiper {
-    width: 100%;
-    height: 100%;
-}
+    /* Botão de login */
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        background: var(--button-bg);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-.swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    button:hover {
+        background: var(--button-hover);
+    }
+
+    /* Responsividade */
+    @media (max-width: 450px) {
+        form {
+            width: 90%;
+        }
+    }
+    select.form-input option:first-child {
+        color: #aaa;
+    }
+    .loader-container {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background-color: rgba(255, 255, 255, 0.2); /* Fundo quase transparente */
+        backdrop-filter: blur(8px); /* Efeito de desfoque */
+        display: grid;
+        place-content: center;
+        transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        display: none;
+        color: white !important;
+    }
+
+
+    svg {
+        width: 20rem;
+    }
+
+    svg text {
+        font-family: 'Poppins', sans-serif !important;
+        line-height: 1.5;
+        font-size: 5rem;
+        stroke-width: 2;
+        letter-spacing: -6px;
+    }
+
+    svg text.text-body {
+        stroke: #f1ebeb !important;
+        animation: 4s infinite alternate animate-stroke;
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 700;
+    }
+
+    svg text.dot {
+        fill: white;
+        stroke: white;
+        animation: 4s infinite alternate animate-dot;
+    }
+
+    @keyframes animate-stroke {
+        0% {
+            fill: transparent;
+            stroke: white;
+            stroke-width: 3;
+            stroke-dashoffset: 25%;
+            stroke-dasharray: 0 32%;
+            font-weight: 600;
+        }
+        50% {
+            fill: transparent;
+            stroke: white;
+            stroke-width: 3;
+            font-weight: 600;
+        }
+        80%, 100% {
+            fill: white;
+            stroke: transparent;
+            stroke-width: 0;
+            stroke-dashoffset: -25%;
+            stroke-dasharray: 32% 0;
+            font-weight: 600;
+        }
+    }
+
+    @keyframes animate-dot {
+        0%, 60% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .container {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Estilização do formulário de login */
+    .form-container {
+        width: 40%;
+        max-width: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f5f5;
+        padding: 20px;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .overlay {
+        width: 100%;
+    }
+
+    /* Estilização do slide */
+    .slider-container {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            height: auto;
+            max-width: 90%;
+        }
+    
+        .form-container {
+            width: 100%;
+            padding: 20px;
+        }
+    
+        .slider-container {
+            width: 100%;
+            height: 250px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .container {
+            max-width: 100%;
+            padding: 10px;
+        }
+    
+        form {
+            max-width: 100%;
+        }
+    
+        .form-container {
+            padding: 15px;
+        }
+    
+        .input-group {
+            padding: 8px;
+        }
+    
+        .form-input {
+            font-size: 14px;
+            padding: 10px;
+        }
+    
+        button {
+            padding: 10px;
+            font-size: 14px;
+        }
+    
+        header h2 {
+            font-size: 20px;
+        }
+    
+        header p {
+            font-size: 12px;
+        }
+    
+        .slider-container {
+            height: 180px;
+        }
+    }
+    
