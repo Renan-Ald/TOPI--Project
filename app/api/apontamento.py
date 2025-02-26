@@ -74,18 +74,7 @@ def get_apontamentos():
         return jsonify({"error": "CODPROJETO não fornecido"}), 400
     
     apontamentos = obter_apontamentos(cod_projeto)
-    return jsonify(apontamentos)    
-
-def get_apontamento():
-    """Endpoint para retornar apontamento com base no CODAPONTAMENTO."""
-    codcoligada = request.args.get('codcoligada')
-    codapontamento = request.args.get('codapontamento')
-
-    if not codcoligada or not codapontamento:
-        return jsonify({"error": "CODCOLIGADA ou CODAPONTAMENTO não fornecido"}), 400
-    
-    apontamento = obter_apontamento(codcoligada,codapontamento)
-    return jsonify(apontamento)    
+    return jsonify(apontamentos)      
 
 def apontamento_page():
     """Renderiza a página de apontamento com os dados do projeto e tarefa."""
@@ -98,13 +87,15 @@ def apontamento_page_edit():
     """Renderiza a página de apontamento com os dados do projeto e tarefa."""
     dados_projeto = projetos()
     dados_tarefa = obter_dados_tarefa()
-
+    get_apont= obter_apontamento()
+    print(get_apont)
     codcoligada = request.args.get('codcoligada')
     codapontamento = request.args.get('codapontamento')
     # Aqui você pode carregar os dados com base nos parâmetros recebidos
 
     return render_template(
         'apontamento_edit.html',
+        get_apont=get_apont,
         dados_projeto=dados_projeto,
         dados_tarefa=dados_tarefa,
         codcoligada=codcoligada,
@@ -188,3 +179,26 @@ def editar_apontamento():
             return jsonify({"message": "Apontamento editado com sucesso!"}), 200
         else:
             return jsonify({"error": "Erro ao editar apontamento", "detalhes": response.text}), response.status_code
+def obter_apontamento():
+    """Obtém os detalhes de um apontamento específico para edição."""
+    token = session.get("token")
+    cod_coligada = session.get("coligada")
+    cod_apontamento = session.get("codapontamento")
+    if not token:
+        return jsonify({"error": "Usuário não autenticado"}), 401
+
+    # Monta a URL correta
+    url = f"{API_URL}/{cod_coligada}$_${cod_apontamento}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        apontamento = response.json()
+        return apontamento
+    else:
+        print(response.status_code)
+        return jsonify({"error": "Erro ao obter apontamento", "detalhes": response.text}), response.status_code

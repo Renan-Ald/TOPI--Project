@@ -90,11 +90,13 @@
                                     <td>{{ item.HRFIM }}</td>
                                     <td>{{ item.HRINT }}</td>
                                     <td>{{ item.HRTOT }}</td>
-                                    <td>
-                                        <a href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
-                                           style="display: inline-block; padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-                                           Editar
-                                        </a>
+                                    <td><a href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
+                                        class="btn-editar"
+                                        data-codapontamento="{{ item.CODAPONTAMENTO }}"
+                                        style="display: inline-block; padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                                        Editar
+                                     </a>
+                                     
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -114,6 +116,28 @@
 
 
     </div>
+<script>
+    function salvarCodApontamento(codapontamento) {
+    fetch("/salvar-codapontamento", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ codapontamento: codapontamento })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("CodApontamento salvo:", data);
+    })
+    .catch(error => console.error("Erro ao salvar CodApontamento:", error));
+}
 
+// Adicionar evento de clique aos botões de editar
+document.querySelectorAll(".btn-editar").forEach(button => {
+    button.addEventListener("click", function () {
+        let codapontamento = this.getAttribute("data-codapontamento"); // Pega o código do atributo
+        salvarCodApontamento(codapontamento);
+    });
+});
+
+</script>
 </body>
 </html>
