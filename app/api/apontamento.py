@@ -202,3 +202,22 @@ def obter_apontamento():
     else:
         print(response.status_code)
         return jsonify({"error": "Erro ao obter apontamento", "detalhes": response.text}), response.status_code
+    
+def apontamento_page_delete():  
+    """Exclui apontamento selecionado"""
+    usuario = session.get("user")
+    token = session.get("token")
+    codcoligada = request.args.get('codcoligada')
+    codapontamento = request.args.get('codapontamento')
+
+
+    if usuario and codcoligada and token and codapontamento:
+        url = f"{API_URL}/{codcoligada}$_${codapontamento}"
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.delete(url, headers=headers)
+
+        if response.status_code == 200:
+            return render_template('dashboard.html')
+        else:
+            return jsonify({"error": "Erro ao excluir apontamento", "detalhes": response.text}), response.status_code
+        
