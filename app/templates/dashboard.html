@@ -91,20 +91,21 @@
                                     <td>{{ item.HRINT }}</td>
                                     <td>{{ item.HRTOT }}</td>
                                     <td>
-                                        <a href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
-                                        class="btn-editar"
-                                        data-codapontamento="{{ item.CODAPONTAMENTO }}"
-                                        style="display: inline-block; padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-                                        Editar
-                                        </a>
-                                        <a href="{{ url_for('routes.apontamento_page_delete', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
-                                        class="btn-deletar"
-                                        data-codcoligada="{{ item.CODCOLIGADA }}"
-                                        data-codapontamento="{{ item.CODAPONTAMENTO }}"
-                                        style="display: inline-block; padding: 8px 12px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;">
-                                        Deletar
-                                        </a>
-                                     
+                                        <div style="display: flex; gap: 10px;">
+                                            <a href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
+                                               class="btn-editar"
+                                               data-codapontamento="{{ item.CODAPONTAMENTO }}"
+                                               style="padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                                                Editar
+                                            </a>
+                                            <a href="{{ url_for('routes.apontamento_page_delete', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
+                                               class="btn-deletar"
+                                               data-codcoligada="{{ item.CODCOLIGADA }}"
+                                               data-codapontamento="{{ item.CODAPONTAMENTO }}"
+                                               style="padding: 8px 12px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;">
+                                                Deletar
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}
