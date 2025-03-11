@@ -17,9 +17,9 @@
             font-family: Arial, sans-serif;
         }
 
-        h1 {
+        h1, h2 {
             color: #3e4e56;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .container {
@@ -50,87 +50,323 @@
             background-color: #0056b3;
         }
 
-        .alert {
-            margin-top: 20px;
-        }
-
-        .select-container {
-            margin-bottom: 20px;
-        }
-
-        /* Ajuste para Select2 */
         .select2-container .select2-selection--single {
             height: 38px;
             padding: 5px;
             font-size: 16px;
         }
+        /* Importando a fonte Poppins */
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+/* Definindo margens e padding padrão */
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Estilos gerais para o body */
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos do container */
+.container {
+    margin-top: 50px;
+    max-width: 800px;
+}
+
+/* Estilos do formulário */
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo das abas */
+.nav-tabs {
+    border-bottom: 2px solid #ddd;
+}
+
+.nav-tabs .nav-link {
+    color: #007bff;
+    border: none;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+/* Estilo dos inputs e select */
+.form-select,
+.form-control {
+    height: 38px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.select2-container .select2-selection--single {
+    height: 38px;
+    padding: 5px;
+}
+
+/* Estilo das labels */
+label {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para a área de texto */
+textarea.form-control {
+    resize: none;
+}
+
+/* Botão customizado */
+.btn-custom {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo da parte do formulário de informações extras */
+h2 {
+    color: #3e4e56;
+    margin-bottom: 20px;
+}
+
+/* Adicionando um fundo de gradiente ao body */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+
+}
+
+/* Estilo do container geral */
+.container {
+    max-width: 800px;
+    background: #fff;
+    padding: 25px 40px 10px 40px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajustando a aparência do título */
+.container .text {
+    text-align: center;
+    font-size: 41px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Estilo para os campos de input */
+.input-data input,
+.textarea textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 2px solid rgba(0,0,0, 0.12);
+}
+
+/* Ajuste no foco do input */
+.input-data input:focus ~ label, .textarea textarea:focus ~ label,
+.input-data input:valid ~ label, .textarea textarea:valid ~ label {
+    transform: translateY(-20px);
+    font-size: 14px;
+    color: #3498db;
+}
+
+.textarea textarea {
+    resize: none;
+    padding-top: 10px;
+}
+
+/* Estilo para as labels */
+.input-data label {
+    position: absolute;
+    pointer-events: none;
+    bottom: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.textarea label {
+    width: 100%;
+    bottom: 40px;
+    background: #fff;
+}
+
+/* Adicionando o estilo de underline nos inputs */
+.input-data .underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+}
+
+.input-data .underline:before {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 100%;
+    background: #3498db;
+}
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="form-container">
-            <h1>Selecione um Projeto</h1>
-            <div class="select-container">
-                <select id="selectProjeto" class="form-select select2">
-                    <option value="">Escolha um projeto...</option>
-                    {% for projeto in dados_projeto %}
-                        <option value="{{ projeto.CODPROJETO }}">{{ projeto.DESCRICAO }}</option>
-                    {% endfor %}
-                </select>
+            
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs" id="formTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="apontamento-tab" data-bs-toggle="tab" data-bs-target="#apontamento" type="button" role="tab">
+                        Apontamento
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="extras-tab" data-bs-toggle="tab" data-bs-target="#extras" type="button" role="tab">
+                        Despesas
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content mt-4" id="formTabsContent">
+
+                <!-- Aba Apontamento -->
+                <div class="tab-pane fade show active" id="apontamento" role="tabpanel">
+                    <h1>Criar Novo Apontamento</h1>
+                    <label for ="select-project">Selecione um Projeto</label>
+                    <div class="select-container">
+                        <select id="selectProjeto" class="form-select select2">
+                            <option value="">Escolha um projeto...</option>
+                            {% for projeto in dados_projeto %}
+                                <option value="{{ projeto.CODPROJETO }}">{{ projeto.DESCRICAO }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <label for ="select-Tarefa">Selecione um Tarefa</label>
+                    <div class="select-container">
+                        <select id="selectTarefa" class="form-select select2">
+                            <option value="">Escolha uma tarefa...</option>
+                            {% for tarefa in dados_tarefa %}
+                                <option value="{{ tarefa.CODTAREFA }}" data-codprojeto="{{ tarefa.CODPROJETO }}">{{ tarefa.DESCRICAO }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <label for ="select-apont">Selecione um Apontamento</label>
+                    <div class="select-container">
+                        <select id="selectApontamento" class="form-select select2">
+                            <option value="">Escolha um apontamento...</option>
+                        </select>
+                    </div>
+                    <form id="formApontamento">
+                        <div class="form-group">
+                            <label for="descricao">Descrição:</label>
+                            <textarea type="textarea" id="descricao" name="descricao" class="form-control" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data">Data:</label>
+                            <input type="date" id="data" name="data" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hr_ini">Hora de Início:</label>
+                            <input type="time" id="hr_ini" name="hr_ini" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hr_fim">Hora de Fim:</label>
+                            <input type="time" id="hr_fim" name="hr_fim" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hr_int">Hora de Intervalo:</label>
+                            <input type="time" id="hr_int" name="hr_int" class="form-control" required>
+                        </div>
+
+                        <input type="hidden" id="cod_projeto" name="cod_projeto">
+                        <input type="hidden" id="cod_tarefa" name="cod_tarefa">
+                        <input type="hidden" id="cod_apontamento" name="cod_apontamento">
+
+                        <button type="submit" class="btn-custom">Criar Apontamento</button>
+                    </form>
+                </div>
+
+                <!-- Aba Informações Extras -->
+                <div class="tab-pane fade" id="extras" role="tabpanel">
+                    <h2>Deslocamento</h2>
+                    <div class="form-group">
+                        <label for ="Kmini">Km Início</label>
+                        <input type="number" id="km_ini" name="KMINI" class="form-control" >
+                        <label for ="Kmfim">Km Fim</label>
+                        <input type="number" id="km_fim" name="KMFIM" class="form-control" >
+                        <label for ="Placa">Placa</label>
+                        <input type="text" id="placa" name="placa" class="form-control">
+                        <label for ="Kmini">Tipo de Veículo</label>
+                        <select class="form-select select2">
+                            <option value="">Escolha o Veículo...</option>
+                            <option value="C">Carro</option>
+                            <option value="M">Moto</option>
+                        </select>
+                        <label for ="turno">Turno</label>
+                        <select class="form-select select2">
+                            <option value="">Escolha o Turno...</option>
+                            <option value="C">Manhã</option>
+                            <option value="M">Tarde</option>
+                            <option value="M">Noite</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="responsavel">Responsável:</label>
+                        <input type="text" id="responsavel" name="responsavel" class="form-control">
+                    </div>
+                    <h2>Outras Despesas</h2>
+                    <div class="form-group">
+                        <label for ="vlr">Valor Despesa</label>
+                        <input type="number" formtarget="currency" id="vlr" name="vlr" class="form-control">
+                        <label for ="obs">Observações Despesa</label>
+                        <textarea id="obs" name="obs" class="form-control" rows="4"></textarea>
+                        <label for ="Kmini">Tipo de Veículo</label>
+                        <select class="form-select select2">
+                            <option value="">Escolha um apontamento...</option>
+                            <option value="C">Taxi</option>
+                            <option value="E">Estacionamento</option>
+                            <option value="O">Outros</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
 
-            <h1>Selecione uma Tarefa</h1>
-            <div class="select-container">
-                <select id="selectTarefa" class="form-select select2">
-                    <option value="">Escolha uma tarefa...</option>
-                    {% for tarefa in dados_tarefa %}
-                        <option value="{{ tarefa.CODTAREFA }}" data-codprojeto="{{ tarefa.CODPROJETO }}">{{ tarefa.DESCRICAO }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <h1>Selecione um Apontamento</h1>
-            <div class="select-container">
-                <select id="selectApontamento" class="form-select select2">
-                    <option value="">Escolha um apontamento...</option>
-                </select>
-            </div>
-
-            <h1>Criar Novo Apontamento</h1>
-            <form id="formApontamento">
-                <div class="form-group">
-                    <label for="descricao">Descrição:</label>
-                    <input type="text" id="descricao" name="descricao" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="data">Data:</label>
-                    <input type="date" id="data" name="data" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="hr_ini">Hora de Início:</label>
-                    <input type="time" id="hr_ini" name="hr_ini" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="hr_fim">Hora de Fim:</label>
-                    <input type="time" id="hr_fim" name="hr_fim" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="hr_int">Hora de Intervalo:</label>
-                    <input type="time" id="hr_int" name="hr_int" class="form-control" required>
-                </div>
-
-                <!-- Campos escondidos para cod_projeto, cod_tarefa e cod_apontamento -->
-                <input type="hidden" id="cod_projeto" name="cod_projeto">
-                <input type="hidden" id="cod_tarefa" name="cod_tarefa">
-                <input type="hidden" id="cod_apontamento" name="cod_apontamento">
-
-                <button type="submit" class="btn-custom">Criar Apontamento</button>
-            </form>
         </div>
     </div>
 
@@ -145,14 +381,12 @@
 
     <script>
         $(document).ready(function () {
-            // Aplicar Select2 aos selects
             $(".select2").select2({
                 width: '100%',
                 placeholder: "Selecione uma opção",
                 allowClear: true
             });
 
-            // Quando o projeto for selecionado
             $("#selectProjeto").change(function () {
                 var codProjeto = $(this).val();
                 $("#cod_projeto").val(codProjeto);
@@ -167,51 +401,31 @@
                             data.forEach(function (apontamento) {
                                 $("#selectApontamento").append(`<option value="${apontamento.CODIGO}">${apontamento.DESCRICAO}</option>`);
                             });
-                            $("#selectApontamento").trigger("change");
                         }
                     });
                 } else {
                     $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
-                    $("#cod_projeto").val('');
                 }
             });
 
-            // Quando a tarefa for selecionada
             $("#selectTarefa").change(function () {
-                var codTarefa = $(this).val();
-                $("#cod_tarefa").val(codTarefa);
+                $("#cod_tarefa").val($(this).val());
             });
 
-            // Quando o apontamento for selecionado
             $("#selectApontamento").change(function () {
-                var codApontamento = $(this).val();
-                $("#cod_apontamento").val(codApontamento);
+                $("#cod_apontamento").val($(this).val());
             });
 
-            // Função para enviar o novo apontamento via POST
             $("#formApontamento").submit(function (event) {
                 event.preventDefault();
-
                 var formData = $(this).serialize();
-
-                if ($("#cod_projeto").val() && $("#cod_tarefa").val() && $("#descricao").val() && $("#data").val()) {
-                    $.ajax({
-                        url: "/criar_apontamento",
-                        type: "POST",
-                        data: formData,
-                        success: function (response) {
-                            alert(response.message);
-                        },
-                        error: function (error) {
-                            alert(error.responseJSON.error);
-                        }
-                    });
-                } else {
-                    alert("Todos os campos necessários devem ser preenchidos!");
-                }
+                console.log("enviar o apontamentos")
+                console.log(formData)
+                $.post("/criar_apontamento", formData, function (response) {
+                    alert(response.message);
+                });
             });
         });
-        
     </script>  
 
 </body>

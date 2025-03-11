@@ -124,7 +124,8 @@ def criar_apontamento():
             "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
             "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
             "DESCRICAO": request.form.get("descricao"),
-            "CODTB1FAT": int(request.form.get("cod_apontamento"))
+            "CODTB1FAT": int(request.form.get("cod_apontamento"))           
+
         }]
         }
         print("Payload do Apontamento:")
