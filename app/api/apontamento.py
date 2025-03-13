@@ -124,8 +124,15 @@ def criar_apontamento():
             "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
             "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
             "DESCRICAO": request.form.get("descricao"),
-            "CODTB1FAT": int(request.form.get("cod_apontamento"))           
-
+            "CODTB1FAT": int(request.form.get("cod_apontamento")),
+            "PLACA": request.form.get("placa"),
+            "TIPOVEIC": request.form.get("veiculo"),
+            "KMINI": request.form.get("KMINI"),
+            "KMFIM": request.form.get("KMFIM"),
+            "TURNO": request.form.get("turno"),
+            "VALORDESP": request.form.get("vlr"),
+            "OBSDESP": request.form.get("obs")
+            
         }]
         }
         print("Payload do Apontamento:")
@@ -164,8 +171,18 @@ def editar_apontamento():
             "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
             "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
             "DESCRICAO": request.form.get("descricao"),
-            "CODTB1FAT": int(request.form.get("cod_apontamento"))
-        }]
+            "CODTB1FAT": int(request.form.get("cod_apontamento")),
+            "PLACA": request.form.get("placa"),
+            "TIPOVEIC": request.form.get("veiculo"),
+            "KMINI": request.form.get("KMINI"),
+            "KMFIM": request.form.get("KMFIM"),
+            "NUMEROOS": "null",
+            "IDMOV": "null",
+            "TURNO": "null",
+            "TIPODESP": "null",
+            "VALORDESP": "null",
+            "OBSDESP": "null"
+            }]
         }
         print("Payload do Apontamento:")
         print(payload)

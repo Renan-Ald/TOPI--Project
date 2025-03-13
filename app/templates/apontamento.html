@@ -316,7 +316,6 @@ body {
                         <input type="hidden" id="cod_projeto" name="cod_projeto">
                         <input type="hidden" id="cod_tarefa" name="cod_tarefa">
                         <input type="hidden" id="cod_apontamento" name="cod_apontamento">
-
                         <button type="submit" class="btn-custom">Criar Apontamento</button>
                     </form>
                 </div>
@@ -332,17 +331,17 @@ body {
                         <label for ="Placa">Placa</label>
                         <input type="text" id="placa" name="placa" class="form-control">
                         <label for ="Kmini">Tipo de Veículo</label>
-                        <select class="form-select select2">
+                        <select id='veiculo'  name= 'veiculo'class="form-select select2">
                             <option value="">Escolha o Veículo...</option>
                             <option value="C">Carro</option>
                             <option value="M">Moto</option>
                         </select>
                         <label for ="turno">Turno</label>
-                        <select class="form-select select2">
+                        <select name = 'turno'id='turno'class="form-select select2">
                             <option value="">Escolha o Turno...</option>
-                            <option value="C">Manhã</option>
-                            <option value="M">Tarde</option>
-                            <option value="M">Noite</option>
+                            <option value="M">Manhã</option>
+                            <option value="T">Tarde</option>
+                            <option value="N">Noite</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -356,7 +355,7 @@ body {
                         <label for ="obs">Observações Despesa</label>
                         <textarea id="obs" name="obs" class="form-control" rows="4"></textarea>
                         <label for ="Kmini">Tipo de Veículo</label>
-                        <select class="form-select select2">
+                        <select name = 'tipo_veiculo'class="form-select select2">
                             <option value="">Escolha um apontamento...</option>
                             <option value="C">Taxi</option>
                             <option value="E">Estacionamento</option>
@@ -364,7 +363,9 @@ body {
                         </select>
                     </div>
                 </div>
-
+                <input type="hidden" id="cod_veiculo" name="cod_veiculo">
+                <input type="hidden" id="cod_turno" name="cod_turno">
+                
             </div>
 
         </div>
@@ -407,24 +408,61 @@ body {
                     $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
                 }
             });
-
             $("#selectTarefa").change(function () {
-                $("#cod_tarefa").val($(this).val());
+                var codTarefa = $(this).val();
+                $("#cod_tarefa").val(codTarefa);
             });
 
+            // Quando o apontamento for selecionado
             $("#selectApontamento").change(function () {
-                $("#cod_apontamento").val($(this).val());
+                var codApontamento = $(this).val();
+                $("#cod_apontamento").val(codApontamento);
+            });
+
+            $("#turno").change(function () {
+                $("#cod_turno").val($(this).val());
+            });
+            $("#veiculo").change(function () {
+                $("#cod_veiculo").val($(this).val());
             });
 
             $("#formApontamento").submit(function (event) {
-                event.preventDefault();
-                var formData = $(this).serialize();
-                console.log("enviar o apontamentos")
-                console.log(formData)
-                $.post("/criar_apontamento", formData, function (response) {
-                    alert(response.message);
-                });
-            });
+    event.preventDefault(); // Evita o recarregamento da página
+
+    // Serializa os dados do formulário principal
+    var formData = $(this).serializeArray();
+
+    // Capturar campos da aba "Informações Extras"
+    $("#extras input, #extras textarea, #extras select").each(function () {
+        var name = $(this).attr("name"); // Obtém o atributo "name"
+        var value = $(this).val(); // Obtém o valor selecionado/digitado
+
+        if (name) {
+            // Se o valor estiver vazio, substitui por null
+            value = value || null;
+            formData.push({ name: name, value: value }); // Adiciona ao formData
+        }
+    });
+    formData.push({ name: "veiculo", value: $("#veiculo").val() || null });
+    formData.push({ name: "turno", value: $("#turno").val() || null });
+    console.log("Enviando apontamento:");
+    console.log(formData);
+
+    // Enviar os dados via AJAX para o backend
+    $.ajax({
+        type: "POST",
+        url: "/criar_apontamento",
+        data: $.param(formData), 
+        success: function (response) {
+            alert("Apontamento criado com sucesso!");
+        },
+        error: function (error) {
+            alert("Erro ao criar apontamento!");
+        }
+    });
+});
+
+
         });
     </script>  
 
