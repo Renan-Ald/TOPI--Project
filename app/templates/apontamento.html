@@ -10,237 +10,43 @@
 
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #f4f6f9;
-            font-family: Arial, sans-serif;
-        }
-
-        h1, h2 {
-            color: #3e4e56;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            margin-top: 50px;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .btn-custom {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
-
-        .select2-container .select2-selection--single {
-            height: 38px;
-            padding: 5px;
-            font-size: 16px;
-        }
-        /* Importando a fonte Poppins */
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-
-/* Definindo margens e padding padrão */
-* {
-    margin: 0;
-    padding: 0;
-    outline: none;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Estilos gerais para o body */
-body {
-    background-color: #f4f6f9;
-    font-family: Arial, sans-serif;
-}
-
-/* Estilos do container */
-.container {
-    margin-top: 50px;
-    max-width: 800px;
-}
-
-/* Estilos do formulário */
-.form-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo das abas */
-.nav-tabs {
-    border-bottom: 2px solid #ddd;
-}
-
-.nav-tabs .nav-link {
-    color: #007bff;
-    border: none;
-}
-
-.nav-tabs .nav-link.active {
-    background-color: #007bff;
-    color: white;
-}
-
-.tab-content {
-    margin-top: 20px;
-}
-
-/* Estilo dos inputs e select */
-.form-select,
-.form-control {
-    height: 38px;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.select2-container .select2-selection--single {
-    height: 38px;
-    padding: 5px;
-}
-
-/* Estilo das labels */
-label {
-    color: #333;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* Estilos para a área de texto */
-textarea.form-control {
-    resize: none;
-}
-
-/* Botão customizado */
-.btn-custom {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-}
-
-.btn-custom:hover {
-    background-color: #0056b3;
-}
-
-/* Estilo da parte do formulário de informações extras */
-h2 {
-    color: #3e4e56;
-    margin-bottom: 20px;
-}
-
-/* Adicionando um fundo de gradiente ao body */
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 10px;
-
-}
-
-/* Estilo do container geral */
-.container {
-    max-width: 800px;
-    background: #fff;
-    padding: 25px 40px 10px 40px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Ajustando a aparência do título */
-.container .text {
-    text-align: center;
-    font-size: 41px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Estilo para os campos de input */
-.input-data input,
-.textarea textarea {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: none;
-    font-size: 17px;
-    border-bottom: 2px solid rgba(0,0,0, 0.12);
-}
-
-/* Ajuste no foco do input */
-.input-data input:focus ~ label, .textarea textarea:focus ~ label,
-.input-data input:valid ~ label, .textarea textarea:valid ~ label {
-    transform: translateY(-20px);
-    font-size: 14px;
-    color: #3498db;
-}
-
-.textarea textarea {
-    resize: none;
-    padding-top: 10px;
-}
-
-/* Estilo para as labels */
-.input-data label {
-    position: absolute;
-    pointer-events: none;
-    bottom: 10px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.textarea label {
-    width: 100%;
-    bottom: 40px;
-    background: #fff;
-}
-
-/* Adicionando o estilo de underline nos inputs */
-.input-data .underline {
-    position: absolute;
-    bottom: 0;
-    height: 2px;
-    width: 100%;
-}
-
-.input-data .underline:before {
-    position: absolute;
-    content: "";
-    height: 2px;
-    width: 100%;
-    background: #3498db;
-}
-
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/apontamento.css') }}">
+   
 </head>
-<body>
-
-    <div class="container">
+<body><div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+    <div class="loginbackground box-background--white padding-top--64">
+      <div class="loginbackground-gridContainer">
+        <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
+          <div class="box-root" style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
+          </div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
+          <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
+          <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
+          <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
+          <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
+          <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
+          <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
+          <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;"></div>
+        </div>
+        <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
+          <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;"></div>
+        </div>
+      </div>
+    </div>
+        <div class="container">
         <div class="form-container">
             
             <!-- Nav Tabs -->
@@ -354,10 +160,11 @@ body {
                         <input type="number" formtarget="currency" id="vlr" name="vlr" class="form-control">
                         <label for ="obs">Observações Despesa</label>
                         <textarea id="obs" name="obs" class="form-control" rows="4"></textarea>
-                        <label for ="Kmini">Tipo de Veículo</label>
-                        <select name = 'tipo_veiculo'class="form-select select2">
+                        <label for ="Kmini">Tipo de Despesas</label>
+                        <select name = 'tipo_desp'class="form-select select2">
                             <option value="">Escolha um apontamento...</option>
-                            <option value="C">Taxi</option>
+                            <option value="T">Taxi</option>
+                            <option value="U">Uber</option>
                             <option value="E">Estacionamento</option>
                             <option value="O">Outros</option>
                         </select>
@@ -370,7 +177,7 @@ body {
 
         </div>
     </div>
-
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -379,92 +186,7 @@ body {
     
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $(".select2").select2({
-                width: '100%',
-                placeholder: "Selecione uma opção",
-                allowClear: true
-            });
-
-            $("#selectProjeto").change(function () {
-                var codProjeto = $(this).val();
-                $("#cod_projeto").val(codProjeto);
-
-                if (codProjeto) {
-                    $.ajax({
-                        url: "/get_apontamentos",
-                        type: "GET",
-                        data: { cod_projeto: codProjeto },
-                        success: function (data) {
-                            $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
-                            data.forEach(function (apontamento) {
-                                $("#selectApontamento").append(`<option value="${apontamento.CODIGO}">${apontamento.DESCRICAO}</option>`);
-                            });
-                        }
-                    });
-                } else {
-                    $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
-                }
-            });
-            $("#selectTarefa").change(function () {
-                var codTarefa = $(this).val();
-                $("#cod_tarefa").val(codTarefa);
-            });
-
-            // Quando o apontamento for selecionado
-            $("#selectApontamento").change(function () {
-                var codApontamento = $(this).val();
-                $("#cod_apontamento").val(codApontamento);
-            });
-
-            $("#turno").change(function () {
-                $("#cod_turno").val($(this).val());
-            });
-            $("#veiculo").change(function () {
-                $("#cod_veiculo").val($(this).val());
-            });
-
-            $("#formApontamento").submit(function (event) {
-    event.preventDefault(); // Evita o recarregamento da página
-
-    // Serializa os dados do formulário principal
-    var formData = $(this).serializeArray();
-
-    // Capturar campos da aba "Informações Extras"
-    $("#extras input, #extras textarea, #extras select").each(function () {
-        var name = $(this).attr("name"); // Obtém o atributo "name"
-        var value = $(this).val(); // Obtém o valor selecionado/digitado
-
-        if (name) {
-            // Se o valor estiver vazio, substitui por null
-            value = value || null;
-            formData.push({ name: name, value: value }); // Adiciona ao formData
-        }
-    });
-    formData.push({ name: "veiculo", value: $("#veiculo").val() || null });
-    formData.push({ name: "turno", value: $("#turno").val() || null });
-    console.log("Enviando apontamento:");
-    console.log(formData);
-
-    // Enviar os dados via AJAX para o backend
-    $.ajax({
-        type: "POST",
-        url: "/criar_apontamento",
-        data: $.param(formData), 
-        success: function (response) {
-            alert("Apontamento criado com sucesso!");
-        },
-        error: function (error) {
-            alert("Erro ao criar apontamento!");
-        }
-    });
-});
-
-
-        });
-    </script>  
+    <script src="{{ url_for('static', filename='js/apontamento.js') }}"></script>
 
 </body>
 </html>
