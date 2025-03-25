@@ -75,6 +75,7 @@
                                 <th>Hora Fim</th>
                                 <th>Intervalo</th>
                                 <th>Horas Totais</th>
+                                <th>N.º OS</th>
                                 <th>Acoes</th>
                             </tr>
                         </thead>
@@ -90,6 +91,7 @@
                                     <td>{{ item.HRFIM }}</td>
                                     <td>{{ item.HRINT }}</td>
                                     <td>{{ item.HRTOT }}</td>
+                                    <td>{{ item.NUMEROOS }}</td>
                                     <td>
                                         <div style="display: flex; gap: 10px;">
                                             <a href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}" 
@@ -105,6 +107,13 @@
                                                style="padding: 8px 12px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;">
                                                 Deletar
                                             </a>
+                                            {% if not item.NUMEROOS %}
+                                            <a href="" 
+                                               class="btn-gerar-os"
+                                               style="padding: 8px 12px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">
+                                                Gerar OS
+                                            </a>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>
