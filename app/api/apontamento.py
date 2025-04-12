@@ -42,13 +42,14 @@ def obter_apontamentos(cod_projeto):
     usuario = session.get("user")
     coligada = session.get("coligada")
     token = session.get("token")
-
+    print("obeter select de apont")
     if usuario and coligada and token:
         url = f"{BASE_API_URL}APT.INT.006/0/T?parameters=CODCOLIGADA={coligada};CODPROJETO={cod_projeto}"
         headers = {"Authorization": f"Bearer {token}"}
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
+            print(response.json())
             return response.json() if isinstance(response.json(), list) else []
     return []
 

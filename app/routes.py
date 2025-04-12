@@ -6,11 +6,11 @@ from app.api.apontamento import apontamento_page, apontamento_page_edit, apontam
 
 routes = Blueprint("routes", __name__)
 
-routes.route("/apontamento", methods=["GET", "POST"])(login)
+routes.route("/login", methods=["GET", "POST"])(login)
 routes.route("/dashboard")(dashboard)
 routes.route("/logout")(logout)
 routes.route("/salvar-coligada", methods=["GET", "POST"])(salvar_coligada)
-routes.route("/apontamento", methods=["GET", "POST"])(apontamento_page)  # Adicionando a rota de apontamento
+routes.route("/apontamento", methods=["GET", "POST"])(apontamento_page)  
 routes.route("/apontamento_edit", methods=["GET", "PUT"])(apontamento_page_edit)
 routes.route("/apontamento_delete", methods=["GET", "DELETE"])(apontamento_page_delete)  
 routes.route('/get_apontamentos', methods=['GET'])(get_apontamentos)

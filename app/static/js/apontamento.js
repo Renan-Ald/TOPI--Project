@@ -11,6 +11,7 @@ $(document).ready(function () {
         $("#cod_projeto").val(codProjeto);
 
         if (codProjeto) {
+            console.log(codProjeto)
             $.ajax({
                 url: "/get_apontamentos",
                 type: "GET",
