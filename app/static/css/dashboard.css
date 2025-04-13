@@ -1,6 +1,7 @@
 /* Estilos gerais */
 body {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
@@ -12,45 +13,13 @@ body {
   font-style: normal;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 250px;
-  background-color: #6e6e6e;
-  color: white;
-  padding: 20px;
-  min-height: 100vh;
-}
-
-.sidebar h4 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  display: flex;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  transition: background 0.3s;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.sidebar a i {
-  width: 30px;
-  color: white;
-}
-
-.sidebar a:hover {
-  background-color: #495057;
-}
-
 /* Conteúdo principal */
 .content {
   flex-grow: 1;
   padding: 20px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* Header */
@@ -83,6 +52,11 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.results {
+  overflow-x: scroll;
+  min-height: 500px;
+}
+
 /* Tabela Responsiva */
 .table-responsive {
   margin-top: 20px;
@@ -110,10 +84,26 @@ body {
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: #f2f2f2;
 }
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+/* Footer */
+.footer {
+  background-color: #62686e;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
 /* Botão Flutuante */
 .btn-float {
   position: fixed;
-  bottom: 20px;
+  bottom: 100px;
   right: 20px;
   background: linear-gradient(135deg, #28a745, #218838);
   color: white;
@@ -126,9 +116,34 @@ body {
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   transition: 0.3s ease-in-out;
+  z-index: 500;
 }
 
 .btn-float:hover {
   background: linear-gradient(135deg, #218838, #1e7e34);
   transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .header .dropdown-toggle {
+    font-size: 14px;
+  }
+
+  thead {
+    font-size: 12px;
+  }
+
+  tbody {
+    font-size: 12px;
+  }
+
+  .btn-float {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 80px;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
 }
