@@ -58,7 +58,7 @@ def dashboard():
     """Renderiza o dashboard com os dados e permite a seleção de datas."""
     dados_usuario = obter_dados_usuario()
     nome_usuario = dados_usuario.get("NOME", "Nome não disponível") if dados_usuario else "Erro ao carregar dados"
-
+    cod_analista = dados_usuario.get("CODVEN", "codigo não disponível") if dados_usuario else "Erro ao carregar dados"
     # Obtém as datas, usando as do mês atual por padrão
     data_de = request.args.get("data_de")
     data_ate = request.args.get("data_ate")
@@ -70,6 +70,7 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
+        codigo_analista=cod_analista,
         nome=nome_usuario,
         data_de=data_de,
         data_ate=data_ate,
