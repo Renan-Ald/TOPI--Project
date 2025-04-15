@@ -3,8 +3,4 @@ requests==2.31.0
 PyJWT==2.8.0
 dotenv
 flask_cors
-<<<<<<< HEAD
-Flask-JWT-Extended
-=======
 flask_jwt_extended
->>>>>>> ff6d946a83cb77df40441c737a1564008ceb61d7

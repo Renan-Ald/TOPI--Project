@@ -26,6 +26,7 @@
       href="https://fonts.googleapis.com/css2?family=Anta&display=swap"
       rel="stylesheet"
     />
+
   </head>
   <body>
     <!-- Main Content -->
@@ -138,7 +139,11 @@
                       <li>
                         <a
                           class="dropdown-item text-danger"
-                          href="{{ url_for('routes.apontamento_page_delete', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}"
+                          href="#"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          data-codcoligada="{{ item.CODCOLIGADA }}"
+                          data-codapontamento="{{ item.CODAPONTAMENTO }}"
                         >
                           Deletar
                         </a>
@@ -155,300 +160,6 @@
                 </td>
               </tr>
               {% endfor %}
-              <tr>
-                <td>2</td>
-                <td>9999</td>
-                <td>TPI085</td>
-                <td>Teste</td>
-                <td>2024-03-11</td>
-                <td>08:00</td>
-                <td>18:00</td>
-                <td>02:00</td>
-                <td>08:00</td>
-                <td>8998098</td>
-                <td>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle btn-sm"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item text-primary"
-                          href="/"
-                        >
-                          Editar
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/"
-                        >
-                          Deletar
-                        </a>
-                      </li>
-                      
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>9999</td>
-                <td>TPI085</td>
-                <td>Teste</td>
-                <td>2024-03-11</td>
-                <td>08:00</td>
-                <td>18:00</td>
-                <td>02:00</td>
-                <td>08:00</td>
-                <td>8998098</td>
-                <td>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle btn-sm"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item text-primary"
-                          href="/"
-                        >
-                          Editar
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/"
-                        >
-                          Deletar
-                        </a>
-                      </li>
-                      
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>9999</td>
-                <td>TPI085</td>
-                <td>Teste</td>
-                <td>2024-03-11</td>
-                <td>08:00</td>
-                <td>18:00</td>
-                <td>02:00</td>
-                <td>08:00</td>
-                <td>8998098</td>
-                <td>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle btn-sm"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item text-primary"
-                          href="/"
-                        >
-                          Editar
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/"
-                        >
-                          Deletar
-                        </a>
-                      </li>
-                      
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>9999</td>
-                <td>TPI085</td>
-                <td>Teste</td>
-                <td>2024-03-11</td>
-                <td>08:00</td>
-                <td>18:00</td>
-                <td>02:00</td>
-                <td>08:00</td>
-                <td>8998098</td>
-                <td>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle btn-sm"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item text-primary"
-                          href="/"
-                        >
-                          Editar
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/"
-                        >
-                          Deletar
-                        </a>
-                      </li>
-                      
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>9999</td>
-                <td>TPI085</td>
-                <td>Teste</td>
-                <td>2024-03-11</td>
-                <td>08:00</td>
-                <td>18:00</td>
-                <td>02:00</td>
-                <td>08:00</td>
-                <td>8998098</td>
-                <td>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle btn-sm"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item text-primary"
-                          href="/"
-                        >
-                          Editar
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/"
-                        >
-                          Deletar
-                        </a>
-                      </li>
-                      
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>9999</td>
-                <td>TPI085</td>
-                <td>Teste</td>
-                <td>2024-03-11</td>
-                <td>08:00</td>
-                <td>18:00</td>
-                <td>02:00</td>
-                <td>08:00</td>
-                <td>8998098</td>
-                <td>
-                  <div class="dropdown">
-                    <button
-                      class="btn dropdown-toggle btn-sm"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item text-primary"
-                          href="/"
-                        >
-                          Editar
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item text-danger"
-                          href="/"
-                        >
-                          Deletar
-                        </a>
-                      </li>
-                      
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </td>
-              </tr>
               <tr>
                 <td>2</td>
                 <td>9999</td>
@@ -764,29 +475,49 @@
           Desenvolvido por Rodrigo Bittencourt / Renan Ferreira / Bruno Sérvio
         </p>
       </div>
-    <script>
-      function salvarCodApontamento(codapontamento) {
-        fetch("/salvar-codapontamento", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ codapontamento: codapontamento }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("CodApontamento salvo:", data);
-          })
-          .catch((error) =>
-            console.error("Erro ao salvar CodApontamento:", error)
-          );
-      }
+    </footer>
 
-      // Adicionar evento de clique aos botões de editar
-      document.querySelectorAll(".btn-editar").forEach((button) => {
-        button.addEventListener("click", function () {
-          let codapontamento = this.getAttribute("data-codapontamento"); // Pega o código do atributo
-          salvarCodApontamento(codapontamento);
-        });
-      });
-    </script>
+    <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal fade" id="deleteModal" tabindex="1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir este apontamento?</p>
+          <div class="alert alert-warning">
+            <p><strong>Detalhes do apontamento:</strong></p>
+            <ul class="list-unstyled">
+              <li>
+                <strong>Código:</strong> <span id="deleteCodApontamento"></span>
+              </li>
+              <li>
+                <strong>Projeto:</strong> <span id="deleteProjeto"></span>
+              </li>
+              <li>
+                <strong>Data:</strong> <span id="deleteData"></span>
+              </li>
+              <li>
+                <strong>Horário:</strong> <span id="deleteHorario"></span>
+              </li>
+            </ul>
+          </div>
+
+          <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Esta ação não pode ser desfeita.</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <a href="#" id="confirmDeleteBtn" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i> Excluir
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    
   </body>
 </html>
