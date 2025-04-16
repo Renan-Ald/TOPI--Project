@@ -102,6 +102,9 @@ def apontamento_page_edit():
         codcoligada=codcoligada,
         codapontamento=codapontamento
     )
+def get_or_none(field):
+    value = request.form.get(field)
+    return value if value and value.strip() != "" else None
 
 # Novo método para criar um apontamento
 def criar_apontamento():
@@ -126,13 +129,14 @@ def criar_apontamento():
             "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
             "DESCRICAO": request.form.get("descricao"),
             "CODTB1FAT": int(request.form.get("cod_apontamento")),
-            "PLACA": request.form.get("placa"),
-            "TIPOVEIC": request.form.get("veiculo"),
-            "KMINI": request.form.get("KMINI"),
-            "KMFIM": request.form.get("KMFIM"),
-            "TURNO": request.form.get("turno"),
-            "VALORDESP": request.form.get("vlr"),
-            "OBSDESP": request.form.get("obs")
+            "PLACA": get_or_none("placa"),           # Vai ser None se o campo estiver vazio
+            "TIPOVEIC": get_or_none("veiculo"),      # Mesmo aqui
+            "KMINI": get_or_none("KMINI"),
+            "KMFIM": get_or_none("KMFIM"),
+            "TURNO": get_or_none("turno"),
+            "VALORDESP": get_or_none("vlr"),
+            "OBSDESP": get_or_none("obs")
+
             
         }]
         }
