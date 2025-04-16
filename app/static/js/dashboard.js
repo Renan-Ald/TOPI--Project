@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       document.getElementById('deleteHorario').textContent = `${horaInicio} - ${horaFim}`;
 
-      //Atualizar o link de confirmação com os parâmetros corretos
-      // confirmDeleteBtn.href = `/apontamento_delete?codcoligada=${codColigada}&codapontamento=${codApontamento}`;
+      // Atualizar o link de confirmação com os parâmetros corretos
+      confirmDeleteBtn.href = `/apontamento_delete?codcoligada=${codColigada}&codapontamento=${codApontamento}`;
       
     });
 
