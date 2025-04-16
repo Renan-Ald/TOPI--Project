@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $(".select2").select2({
         width: '100%',
@@ -74,6 +73,7 @@ type: "POST",
 url: "/criar_apontamento",
 data: $.param(formData), 
 success: function (response) {
+    window.location.href = '/dashboard';
     alert("Apontamento criado com sucesso!");
 },
 error: function (error) {

@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify, session
+from flask import render_template, request, jsonify, session, url_for, redirect
 import requests
 
 # Definindo a URL base
@@ -146,7 +146,7 @@ def criar_apontamento():
         response = requests.post(API_URL, json=payload, headers=headers)
         
         if response.status_code == 200:
-            return jsonify({"message": "Apontamento enviado com sucesso!"}), 200
+            return redirect(url_for('routes.dashboard'))
         else:
             return jsonify({"error": "Erro ao enviar apontamento", "detalhes": response.text}), response.status_code
         
@@ -228,7 +228,7 @@ def apontamento_page_delete():
     token = session.get("token")
     codcoligada = request.args.get('codcoligada')
     codapontamento = request.args.get('codapontamento')
-
+    redirect_to = request.args.get('redirect', 'dashboard')
 
     if usuario and codcoligada and token and codapontamento:
         url = f"{API_URL}/{codcoligada}$_${codapontamento}"
@@ -236,7 +236,7 @@ def apontamento_page_delete():
         response = requests.delete(url, headers=headers)
 
         if response.status_code == 200:
-            return render_template('dashboard.html')
+            return redirect(url_for('routes.dashboard'))
         else:
             return jsonify({"error": "Erro ao excluir apontamento", "detalhes": response.text}), response.status_code
         
