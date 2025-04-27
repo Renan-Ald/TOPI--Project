@@ -15,14 +15,14 @@ function salvarCodApontamento(codapontamento) {
 }
 
 // Adicionar evento de clique aos botões de editar
-document.querySelectorAll(".btn-editar").forEach((button) => {
+document.querySelectorAll(".editar-link").forEach((button) => {
   button.addEventListener("click", function () {
     let codapontamento = this.getAttribute("data-codapontamento");
     salvarCodApontamento(codapontamento);
   });
 });
 
-// Confirmação de exclusão
+// Confirmação de exclusãoACCAA
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.delete-link').forEach(link => {
     link.addEventListener('click', function(e) {

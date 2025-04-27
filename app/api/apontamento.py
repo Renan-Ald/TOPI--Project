@@ -49,22 +49,23 @@ def obter_apontamentos(cod_projeto):
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
-            print(response.json())
+            print("obter apont"+response.json())
             return response.json() if isinstance(response.json(), list) else []
     return []
 
-def obter_apontamento(codcoligada, codapontamento):
+def obter_apontamento(codapontamento):
     """Obtém os apontamentos filtrados pelo CODPROJETO."""
     usuario = session.get("user")
     coligada = session.get("coligada")
     token = session.get("token")
-
+    print("entrou no apontamento")
     if usuario and coligada and token:
         url = f"{API_URL}/{coligada}$_${codapontamento}"
         headers = {"Authorization": f"Bearer {token}"}
         response = requests.get(url, headers=headers)
-
+        print("entrou no primeir if")
         if response.status_code == 200:
+            print("segundo")
             return response.json() if isinstance(response.json(), list) else []
     return []
 
@@ -86,12 +87,12 @@ def apontamento_page():
 
 def apontamento_page_edit():
     """Renderiza a página de apontamento com os dados do projeto e tarefa."""
+    codcoligada = request.args.get('codcoligada')
+    codapontamento = request.args.get('codapontamento')
     dados_projeto = projetos()
     dados_tarefa = obter_dados_tarefa()
     get_apont= obter_apontamento()
-    print(get_apont)
-    codcoligada = request.args.get('codcoligada')
-    codapontamento = request.args.get('codapontamento')
+   
     # Aqui você pode carregar os dados com base nos parâmetros recebidos
 
     return render_template(
@@ -207,6 +208,8 @@ def obter_apontamento():
     token = session.get("token")
     cod_coligada = session.get("coligada")
     cod_apontamento = session.get("codapontamento")
+    print(cod_coligada ,cod_apontamento )
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!       ")
     if not token:
         return jsonify({"error": "Usuário não autenticado"}), 401
 
@@ -223,7 +226,7 @@ def obter_apontamento():
         apontamento = response.json()
         return apontamento
     else:
-        print(response.status_code)
+        print("status do erro" +str(response.status_code))
         return jsonify({"error": "Erro ao obter apontamento", "detalhes": response.text}), response.status_code
     
 def apontamento_page_delete():  

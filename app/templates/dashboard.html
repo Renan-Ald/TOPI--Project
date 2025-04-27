@@ -130,8 +130,9 @@
                     <ul class="dropdown-menu">
                       <li>
                         <a
-                          class="dropdown-item text-primary"
-                          href="{{ url_for('routes.apontamento_page_edit', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO) }}"
+                          class="dropdown-item text-primary editar-link"
+                          href="{{ url_for('routes.apontamento_page_edit') }}"
+                          data-codapontamento="{{ item.CODAPONTAMENTO }}"
                         >
                           Editar
                         </a>
