@@ -49,7 +49,7 @@ def obter_apontamentos(cod_projeto):
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
-            print("obter apont"+response.json())
+            
             return response.json() if isinstance(response.json(), list) else []
     return []
 
@@ -92,6 +92,7 @@ def apontamento_page_edit():
     dados_projeto = projetos()
     dados_tarefa = obter_dados_tarefa()
     get_apont= obter_apontamento()
+    print(get_apont)
    
     # Aqui você pode carregar os dados com base nos parâmetros recebidos
 
@@ -167,29 +168,28 @@ def editar_apontamento():
         
         # Recebendo os dados do formulário
         payload = {
-            "ZMDAPONTAMENTO": [{
-            "CODCOLIGADA": int(session.get("coligada")),
-            "CODVEN": codven,
-            "CODPROJETO": int(request.form.get("cod_projeto")),
-            "CODTAREFA": int(request.form.get("cod_tarefa")),
-            "DATA": request.form.get("data"),
-            "HRINI": f"{request.form.get('data')}T{request.form.get('hr_ini')}:00-03:00",
-            "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
-            "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
-            "DESCRICAO": request.form.get("descricao"),
-            "CODTB1FAT": int(request.form.get("cod_apontamento")),
-            "PLACA": request.form.get("placa"),
-            "TIPOVEIC": request.form.get("veiculo"),
-            "KMINI": request.form.get("KMINI"),
-            "KMFIM": request.form.get("KMFIM"),
-            "NUMEROOS": "null",
-            "IDMOV": "null",
-            "TURNO": "null",
-            "TIPODESP": "null",
-            "VALORDESP": "null",
-            "OBSDESP": "null"
-            }]
-        }
+    "ZMDAPONTAMENTO": [{
+        "CODCOLIGADA": int(session.get("coligada")),
+        "CODAPONTAMENTO": int(request.form.get("cod_apontamento")),
+        "CODVEN": codven,
+        "CODPROJETO": int(request.form.get("cod_projeto")),
+        "CODTAREFA": int(request.form.get("cod_tarefa")),
+        "DATA": request.form.get("data") + "T00:00:00-03:00",
+        "HRINI": f"{request.form.get('data')}T{request.form.get('hr_ini')}:00-03:00",
+        "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
+        "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
+        "DESCRICAO": request.form.get("descricao"),
+        "CODTB1FAT": request.form.get("CODTB1FAT"),
+        "PLACA": get_or_none("placa"),           # Vai ser None se o campo estiver vazio
+        "TIPOVEIC": get_or_none("veiculo"),      # Mesmo aqui
+        "KMINI": get_or_none("KMINI"),
+        "KMFIM": get_or_none("KMFIM"),
+        "TURNO": get_or_none("turno"),
+        "VALORDESP": get_or_none("vlr"),
+        "OBSDESP": get_or_none("obs"),
+        "id": f"{session.get('coligada')}$_${request.form.get('cod_apontamento')}"
+    }]
+}
         print("Payload do Apontamento:")
         print(payload)
         headers = {
@@ -197,7 +197,7 @@ def editar_apontamento():
             "Content-Type": "application/json"
         }
         
-        response = requests.post(API_URL, json=payload, headers=headers)
+        response = requests.put(API_URL + f"/{session.get('coligada')}$_${request.form.get('cod_apontamento')}", json=payload, headers=headers)
         
         if response.status_code == 200:
             return jsonify({"message": "Apontamento editado com sucesso!"}), 200
@@ -208,8 +208,6 @@ def obter_apontamento():
     token = session.get("token")
     cod_coligada = session.get("coligada")
     cod_apontamento = session.get("codapontamento")
-    print(cod_coligada ,cod_apontamento )
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!       ")
     if not token:
         return jsonify({"error": "Usuário não autenticado"}), 401
 
