@@ -200,7 +200,8 @@ def editar_apontamento():
         response = requests.put(API_URL + f"/{session.get('coligada')}$_${request.form.get('cod_apontamento')}", json=payload, headers=headers)
         
         if response.status_code == 200:
-            return jsonify({"message": "Apontamento editado com sucesso!"}), 200
+            return jsonify({"message": "Apontamento editado com sucesso!"}),200
+            
         else:
             return jsonify({"error": "Erro ao editar apontamento", "detalhes": response.text}), response.status_code
 def obter_apontamento():

@@ -78,8 +78,18 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <div class="form-group">
+                    <label for="selectApontamento">Apontamento:</label>
+                    <select id="selectApontamento" name="cod_apontamento" class="form-select select2">
+                        <option value="">Escolha um apontamento...</option>
+                        {% for apontamento in dados_apontamento %}
+                            <option value="{{ apontamento.CODAPONTAMENTO }}" {% if get_apont.data.CODAPONTAMENTO == apontamento.CODAPONTAMENTO %}selected{% endif %}>
+                                {{ apontamento.DESCRICAO }}
+                            </option>
+                        {% endfor %}
+                    </select>                    
+                </div>
+                                <div class="form-group">
                     <label for="descricao">Descrição:</label>
                     <input type="text" id="descricao" name="descricao" class="form-control" value="{{ get_apont.data.DESCRICAO }}" required>
                 </div>
@@ -123,44 +133,110 @@
     
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <!-- ...cabeçalho mantido igual... -->
 
-    <script>
-        $(document).ready(function () {
-            $(".select2").select2({
-                width: '100%',
-                placeholder: "Selecione uma opção",
-                allowClear: true
-            });
+<script>
+    $(document).ready(function () {
+        $(".select2").select2({
+            width: '100%',
+            placeholder: "Selecione uma opção",
+            allowClear: true
+        });
 
-            // Atualiza os campos escondidos ao mudar seleção
-            $("#selectProjeto").change(function () {
-                $("#cod_projeto").val($(this).val());
-            });
+        const codProjetoInicial = $("#cod_projeto").val();
+        const codApontamentoInicial = $("#cod_apontamento").val();
 
-            $("#selectTarefa").change(function () {
-                $("#cod_tarefa").val($(this).val());
-            });
+        if (codApontamentoInicial) {
+            console.log("Apontamento inicial carregado:", codApontamentoInicial);
+            $("#selectApontamento").val(codApontamentoInicial).trigger('change');
+        }
 
-            // Enviar alterações via AJAX
-            $("#formApontamento").submit(function (event) {
-                event.preventDefault();
+        // Carrega apontamentos ao abrir a página
+        if (codProjetoInicial) {
+            carregarApontamentos(codProjetoInicial, codApontamentoInicial);
+        }
 
-                var formData = $(this).serialize();
+        $("#selectProjeto").change(function () {
+            const codProjeto = $(this).val();
+            console.log("Projeto selecionado:", codProjeto);
 
-                $.ajax({
-                    url: "/editar_apontamento",
-                    type: "PUT",
-                    data: formData,
-                    success: function (response) {
-                        alert(response.message);
-                    },
-                    error: function (error) {
-                        alert(error.responseJSON.error);
+            $("#cod_projeto").val(codProjeto);
+            $("#cod_apontamento").val(""); // Limpa valor ao trocar projeto
+
+            if (codProjeto) {
+                carregarApontamentos(codProjeto, null);
+            } else {
+                $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
+                $("#selectApontamento").val('').trigger('change');
+            }
+        });
+
+        $("#selectTarefa").change(function () {
+            const codTarefa = $(this).val();
+            console.log("Tarefa selecionada:", codTarefa);
+            $("#cod_tarefa").val(codTarefa);
+        });
+
+        $("#selectApontamento").on('change', function () {
+            const codApontamento = $(this).val();
+            console.log("Apontamento selecionado pelo usuário:", codApontamento);
+            $("#cod_apontamento").val(codApontamento);
+});
+
+
+        function carregarApontamentos(codProjeto, apontamentoSelecionado) {
+            console.log("Carregando apontamentos para o projeto:", codProjeto);
+
+            $.ajax({
+                url: "/get_apontamentos",
+                type: "GET",
+                data: { cod_projeto: codProjeto },
+                success: function (data) {
+                    const apontamentoSelect = $("#selectApontamento");
+                    apontamentoSelect.empty().append('<option value="">Escolha um apontamento...</option>');
+                    console.log(data)
+                    data.forEach(function (item) {
+                        apontamentoSelect.append(
+                            `<option value="${item.CODIGO}">${item.DESCRICAO}</option>`
+                        );
+                    });
+
+                    if (apontamentoSelecionado) {
+                        console.log("Setando apontamento selecionado após AJAX:", apontamentoSelecionado);
+                        apontamentoSelect.val(apontamentoSelecionado).trigger('change');
+                        $("#cod_apontamento").val(apontamentoSelecionado);
+                    } else {
+                        apontamentoSelect.val('').trigger('change');
                     }
-                });
+                },
+                error: function () {
+                    alert("Erro ao carregar os apontamentos.");
+                }
+            });
+        }
+
+        $("#formApontamento").submit(function (event) {
+            event.preventDefault();
+
+            var formData = $(this).serialize();
+            console.log("Dados enviados no formulário:", formData);
+
+            $.ajax({
+                url: "/editar_apontamento",
+                type: "PUT",
+                data: formData,
+                success: function (response) {
+                    console.log("Resposta do servidor:", response);
+                    alert(response.message);
+                    window.location.href = "/dashboard";
+                },
+                error: function (error) {
+                    console.error("Erro na submissão:", error);
+                    alert(error.responseJSON?.error || "Erro ao salvar.");
+                }
             });
         });
-    </script>  
-
+    });
+</script>
 </body>
 </html>
