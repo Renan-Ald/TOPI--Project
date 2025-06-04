@@ -1,4 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const animationText = document.getElementById("animation-text");
+      const selectedOption = document.getElementById("topiSelect");
+
+      if (selectedOption) {
+        selectedOption.addEventListener("change", function () {
+          const selectedValue = selectedOption.value;
+          if (selectedValue === "1") {
+            animationText.textContent = "CIS";
+          } else if (selectedValue === "2") {
+            animationText.textContent = "TOPI";
+          }
+        });
+      }
     const loginForm = document.getElementById("loginForm");
     const loader = document.getElementById("loader");
 

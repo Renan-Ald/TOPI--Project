@@ -129,20 +129,5 @@
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    <script>
-      const animationText = document.getElementById("animation-text");
-      const selectedOption = document.getElementById("topiSelect");
-
-      if (selectedOption) {
-        selectedOption.addEventListener("change", function () {
-          const selectedValue = selectedOption.value;
-          if (selectedValue === "1") {
-            animationText.textContent = "CIS";
-          } else if (selectedValue === "2") {
-            animationText.textContent = "TOPI";
-          }
-        });
-      }
-    </script>
   </body>
 </html>

@@ -5,54 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Apontamento</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #f4f6f9;
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: #3e4e56;
-            margin-bottom: 30px;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .btn-custom {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
-        .select-container {
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/apontamento_edit.css') }}">
+
+
 </head>
 <body>
 
     <div class="container">
+        <div class="d-flex justify-content-start mb-4">
+                <a href="{{ url_for('routes.dashboard') }}" class="btn btn-link">&#8249&#8249 Voltar ao Dashboard</a>
+            </div>
         <div class="form-container">
-            <h1>Editar Apontamento</h1>
+            <h1 class="text-center">Editar Apontamento</h1>
 
             <form id="formApontamento">
                 <div class="form-group">
@@ -84,7 +58,7 @@
                         <option value="">Escolha um apontamento...</option>
                         {% for apontamento in dados_apontamento %}
                             <option value="{{ apontamento.CODAPONTAMENTO }}" {% if get_apont.data.CODAPONTAMENTO == apontamento.CODAPONTAMENTO %}selected{% endif %}>
-                                {{ apontamento.DESCRICAO }}
+                                {{ apontamento.CODAPONTAMENTO }}
                             </option>
                         {% endfor %}
                     </select>                    
@@ -125,6 +99,15 @@
         </div>
     </div>
 
+    <footer class="footer">
+      <div class="container_footer">
+        <span >© 2025 TOPI. Todos os direitos reservados.</span>
+        <p >
+          Desenvolvido por Rodrigo Bittencourt / Renan Ferreira / Bruno Sérvio
+        </p>
+      </div>
+    </footer>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -135,108 +118,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <!-- ...cabeçalho mantido igual... -->
 
-<script>
-    $(document).ready(function () {
-        $(".select2").select2({
-            width: '100%',
-            placeholder: "Selecione uma opção",
-            allowClear: true
-        });
-
-        const codProjetoInicial = $("#cod_projeto").val();
-        const codApontamentoInicial = $("#cod_apontamento").val();
-
-        if (codApontamentoInicial) {
-            console.log("Apontamento inicial carregado:", codApontamentoInicial);
-            $("#selectApontamento").val(codApontamentoInicial).trigger('change');
-        }
-
-        // Carrega apontamentos ao abrir a página
-        if (codProjetoInicial) {
-            carregarApontamentos(codProjetoInicial, codApontamentoInicial);
-        }
-
-        $("#selectProjeto").change(function () {
-            const codProjeto = $(this).val();
-            console.log("Projeto selecionado:", codProjeto);
-
-            $("#cod_projeto").val(codProjeto);
-            $("#cod_apontamento").val(""); // Limpa valor ao trocar projeto
-
-            if (codProjeto) {
-                carregarApontamentos(codProjeto, null);
-            } else {
-                $("#selectApontamento").empty().append('<option value="">Escolha um apontamento...</option>');
-                $("#selectApontamento").val('').trigger('change');
-            }
-        });
-
-        $("#selectTarefa").change(function () {
-            const codTarefa = $(this).val();
-            console.log("Tarefa selecionada:", codTarefa);
-            $("#cod_tarefa").val(codTarefa);
-        });
-
-        $("#selectApontamento").on('change', function () {
-            const codApontamento = $(this).val();
-            console.log("Apontamento selecionado pelo usuário:", codApontamento);
-            $("#cod_apontamento").val(codApontamento);
-});
-
-
-        function carregarApontamentos(codProjeto, apontamentoSelecionado) {
-            console.log("Carregando apontamentos para o projeto:", codProjeto);
-
-            $.ajax({
-                url: "/get_apontamentos",
-                type: "GET",
-                data: { cod_projeto: codProjeto },
-                success: function (data) {
-                    const apontamentoSelect = $("#selectApontamento");
-                    apontamentoSelect.empty().append('<option value="">Escolha um apontamento...</option>');
-                    console.log(data)
-                    data.forEach(function (item) {
-                        apontamentoSelect.append(
-                            `<option value="${item.CODIGO}">${item.DESCRICAO}</option>`
-                        );
-                    });
-
-                    if (apontamentoSelecionado) {
-                        console.log("Setando apontamento selecionado após AJAX:", apontamentoSelecionado);
-                        apontamentoSelect.val(apontamentoSelecionado).trigger('change');
-                        $("#cod_apontamento").val(apontamentoSelecionado);
-                    } else {
-                        apontamentoSelect.val('').trigger('change');
-                    }
-                },
-                error: function () {
-                    alert("Erro ao carregar os apontamentos.");
-                }
-            });
-        }
-
-        $("#formApontamento").submit(function (event) {
-            event.preventDefault();
-
-            var formData = $(this).serialize();
-            console.log("Dados enviados no formulário:", formData);
-
-            $.ajax({
-                url: "/editar_apontamento",
-                type: "PUT",
-                data: formData,
-                success: function (response) {
-                    console.log("Resposta do servidor:", response);
-                    alert(response.message);
-                    window.location.href = "/dashboard";
-                },
-                error: function (error) {
-                    console.error("Erro na submissão:", error);
-                    alert(error.responseJSON?.error || "Erro ao salvar.");
-                }
-            });
-        });
-    });
-</script>
+    <script src="{{ url_for('static', filename='js/apontamento_edit.js') }}"></script>
 </body>
 </html>
