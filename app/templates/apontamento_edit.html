@@ -27,6 +27,24 @@
             </div>
         <div class="form-container">
             <h1 class="text-center">Editar Apontamento</h1>
+            <ul class="nav nav-tabs mb-4" id="formTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="apontamento-tab" data-bs-toggle="tab" data-bs-target="#apontamento" type="button" role="tab">
+                        Apontamento
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="extras-tab" data-bs-toggle="tab" data-bs-target="#extras" type="button" role="tab">
+                        Despesas
+                    </button>
+                </li>
+            </ul>
+            
+
+            <div class="tab-content mt-4" id="formTabsContent">
+
+                <!-- Aba Apontamento -->
+                <div class="tab-pane fade show active" id="apontamento" role="tabpanel">
 
             <form id="formApontamento">
                 <div class="form-group">
@@ -95,6 +113,70 @@
                 <input type="hidden" id="cod_apontamento" name="cod_apontamento" value="{{ get_apont.data.CODAPONTAMENTO }}">
 
                 <button type="submit" class="btn-custom">Salvar Alterações</button>
+
+                </div>
+
+                <!-- Aba Despesas -->
+                <div class="tab-pane fade" id="extras" role="tabpanel">
+                    <h2>Deslocamento</h2>
+                    <div class="form-group">
+                        <label for ="Kmini">Km Início</label>
+                        <input type="number" id="km_ini" name="KMINI" class="form-control" value="{{ get_apont.data.KMINI }}">
+                    </div>
+                    <div class="form-group">    
+                        <label class="mt-2" for ="Kmfim">Km Fim</label>
+                        <input type="number" id="km_fim" name="KMFIM" class="form-control" value="{{ get_apont.data.KMFIM }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="mt-2" for ="Placa">Placa</label>
+                        <input type="text" id="placa" name="placa" class="form-control" value="{{ get_apont.data.PLACA }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="mt-2" for ="Kmini">Tipo de Veículo</label>
+                        <select class="mt-2" id='veiculo'  name= 'veiculo'class="form-select select2">
+                            <option value="">Escolha o Veículo...</option>
+                            <option value="C">Carro</option>
+                            <option value="M">Moto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="mt-2" for ="turno">Turno</label>
+                        <select name = 'turno'id='turno'class="form-select select2">
+                            <option value="">Escolha o Turno...</option>
+                            <option value="M">Manhã</option>
+                            <option value="T">Tarde</option>
+                            <option value="N">Noite</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="responsavel">Responsável:</label>
+                        <input type="text" id="responsavel" name="responsavel" class="form-control"> <!-- colocar o get_apont.data.RESPONSAVEL -->
+                    </div>
+                    <h2>Outras Despesas</h2>
+                    <div class="form-group">
+                        <label class="mb-2" for ="vlr">Valor Despesa</label>
+                        <input type="number" formtarget="currency" id="vlr" name="vlr" class="form-control" value="{{ get_apont.data.VALORDESP }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2" for ="obs">Observações Despesa</label>
+                        <input type="text" id="obs" name="obs" class="form-control" value="{{ get_apont.data.OBSDESP }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for ="Kmini">Tipo de Despesas</label>
+                        <select name = 'tipo_desp'class="form-select select2">
+                            <option value="">Escolha um apontamento...</option>
+                            <option value="T">Taxi</option>
+                            <option value="U">Uber</option>
+                            <option value="E">Estacionamento</option>
+                            <option value="O">Outros</option>
+                        </select>
+                    </div>
+                    </div>
+                </div>
+                <input type="hidden" id="cod_veiculo" name="cod_veiculo">
+                <input type="hidden" id="cod_turno" name="cod_turno">
+                </div>
+                </div>
             </form>
         </div>
     </div>
