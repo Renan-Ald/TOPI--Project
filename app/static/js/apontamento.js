@@ -76,8 +76,18 @@ success: function (response) {
     window.location.href = '/dashboard';
     alert("Apontamento criado com sucesso!");
 },
-error: function (error) {
-    alert("Erro ao criar apontamento!");
+error: function (xhr) {
+    let msg = "Erro ao criar apontamento!";
+
+    if (xhr.responseJSON && xhr.responseJSON.detalhes) {
+        msg = xhr.responseJSON.detalhes;
+    }
+
+    // Se quiser exibir como alerta
+    alert(msg);
+
+    // Ou exibir em um elemento da página
+    // $("#erro").html(msg); // precisa de <div id="erro"></div> no HTML
 }
 });
 });

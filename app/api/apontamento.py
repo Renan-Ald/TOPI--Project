@@ -154,7 +154,18 @@ def criar_apontamento():
         if response.status_code == 200:
             return redirect(url_for('routes.dashboard'))
         else:
-            return jsonify({"error": "Erro ao enviar apontamento", "detalhes": response.text}), response.status_code
+            try:
+                # Tenta extrair o 'detail' do JSON da resposta
+                messages = response.json().get("messages", [])
+                detail = messages[0].get("detail", "Erro desconhecido.") if messages else "Erro desconhecido."
+            except Exception as e:
+                detail = f"Erro ao interpretar resposta: {str(e)}"
+
+            return jsonify({
+                "error": "Erro ao enviar apontamento",
+                "detalhes": detail
+            }), response.status_code
+
         
 # Novo método para editar um apontamento
 def editar_apontamento():
@@ -234,6 +245,7 @@ def apontamento_page_delete():
     token = session.get("token")
     codcoligada = request.args.get('codcoligada')
     codapontamento = request.args.get('codapontamento')
+    print("codigo apont delete"+codapontamento)
     redirect_to = request.args.get('redirect', 'dashboard')
 
     if usuario and codcoligada and token and codapontamento:
