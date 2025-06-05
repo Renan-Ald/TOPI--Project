@@ -7,7 +7,7 @@ from flask_jwt_extended import JWTManager
 
 def verificar_sessao():
     """Middleware para verificar sessão do usuário e atualizar token se necessário."""
-    print("Sessão atual:", session)
+    #print("Sessão atual:", session)
 
     rotas_livres = ["routes.login", "routes.salvar_coligada", "static"]  # Rotas abertas
 

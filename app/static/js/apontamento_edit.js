@@ -6,7 +6,7 @@ $(document).ready(function () {
         });
 
         const codProjetoInicial = $("#cod_projeto").val();
-        const codApontamentoInicial = $("#cod_apontamento").val();
+        const codApontamentoInicial = $("#CODTB1FAT").val();
 
         if (codApontamentoInicial) {
             console.log("Apontamento inicial carregado:", codApontamentoInicial);
@@ -66,7 +66,7 @@ $(document).ready(function () {
                     if (apontamentoSelecionado) {
                         console.log("Setando apontamento selecionado após AJAX:", apontamentoSelecionado);
                         apontamentoSelect.val(apontamentoSelecionado).trigger('change');
-                        $("#cod_apontamento").val(apontamentoSelecionado);
+                        $("#CODTB1FAT").val(apontamentoSelecionado);
                     } else {
                         apontamentoSelect.val('').trigger('change');
                     }

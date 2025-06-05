@@ -32,7 +32,7 @@ def obter_dados_usuario():
         url = f"{BASE_URL}APT.INT.003/0/T?parameters=CODCOLIGADA={coligada};USUARIO={usuario}"
         headers = {"Authorization": f"Bearer {token}"}
         response = requests.get(url, headers=headers)
-        print(response.json())
+        #print(response.json())
         if response.status_code == 200:
             dados = response.json() 
             session["CODVEN"] = dados[0]["CODVEN"]

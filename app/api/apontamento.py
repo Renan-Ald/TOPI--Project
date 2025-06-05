@@ -170,7 +170,7 @@ def editar_apontamento():
         payload = {
     "ZMDAPONTAMENTO": [{
         "CODCOLIGADA": int(session.get("coligada")),
-        "CODAPONTAMENTO": int(request.form.get("cod_apontamento")),
+        "CODAPONTAMENTO": int(request.form.get("cod_apontamento_get")),
         "CODVEN": codven,
         "CODPROJETO": int(request.form.get("cod_projeto")),
         "CODTAREFA": int(request.form.get("cod_tarefa")),
@@ -187,7 +187,7 @@ def editar_apontamento():
         "TURNO": get_or_none("turno"),
         "VALORDESP": get_or_none("vlr"),
         "OBSDESP": get_or_none("obs"),
-        "id": f"{session.get('coligada')}$_${request.form.get('cod_apontamento')}"
+        "id": f"{session.get('coligada')}$_${request.form.get('cod_apontamento_get')}"
     }]
 }
         print("Payload do Apontamento:")
@@ -197,7 +197,7 @@ def editar_apontamento():
             "Content-Type": "application/json"
         }
         
-        response = requests.put(API_URL + f"/{session.get('coligada')}$_${request.form.get('cod_apontamento')}", json=payload, headers=headers)
+        response = requests.put(API_URL + f"/{session.get('coligada')}$_${request.form.get('cod_apontamento_get')}", json=payload, headers=headers)
         
         if response.status_code == 200:
             return jsonify({"message": "Apontamento editado com sucesso!"}),200
