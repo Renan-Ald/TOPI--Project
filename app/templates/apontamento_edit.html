@@ -135,17 +135,17 @@
                         <label class="mt-2" for ="Kmini">Tipo de Veículo</label>
                         <select class="mt-2" id='veiculo'  name= 'veiculo'class="form-select select2">
                             <option value="">Escolha o Veículo...</option>
-                            <option value="C">Carro</option>
-                            <option value="M">Moto</option>
+                            <option value="C" {% if get_apont.data.TIPOVEIC == 'C' %}selected{% endif %}>Carro</option>
+                            <option value="M" {% if get_apont.data.TIPOVEIC == 'M' %}selected{% endif %}>Moto</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="mt-2" for ="turno">Turno</label>
                         <select name = 'turno'id='turno'class="form-select select2">
                             <option value="">Escolha o Turno...</option>
-                            <option value="M">Manhã</option>
-                            <option value="T">Tarde</option>
-                            <option value="N">Noite</option>
+                            <option value="M" {% if get_apont.data.TURNO == 'M' %} selected {% endif %}>Manhã</option>
+                            <option {% if get_apont.data.TURNO == 'T' %} selected {% endif %} value="T">Tarde</option>
+                            <option value="N" {% if get_apont.data.TURNO == 'N' %} selected {% endif %}>Noite</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -165,10 +165,10 @@
                         <label for ="Kmini">Tipo de Despesas</label>
                         <select name = 'tipo_desp'class="form-select select2">
                             <option value="">Escolha um apontamento...</option>
-                            <option value="T">Taxi</option>
-                            <option value="U">Uber</option>
-                            <option value="E">Estacionamento</option>
-                            <option value="O">Outros</option>
+                            <option value="T" {% if get_apont.data.TIPODESP == 'T' %} selected {% endif %}>Taxi</option>
+                            <option value="U" {% if get_apont.data.TIPODESP == 'U' %} selected {% endif %}>Uber</option>
+                            <option value="E" {% if get_apont.data.TIPODESP == 'E' %} selected {% endif %}>Estacionamento</option>
+                            <option value="O" {% if get_apont.data.TIPODESP == 'O' %} selected {% endif %}>Outros</option>
                         </select>
                     </div>
                     </div>

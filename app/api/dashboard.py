@@ -56,6 +56,7 @@ def obter_dados_periodo(data_de, data_ate):
 
 def dashboard():
     """Renderiza o dashboard com os dados e permite a seleção de datas."""
+    coligada = session.get("coligada")
     dados_usuario = obter_dados_usuario()
     nome_usuario = dados_usuario.get("NOME", "Nome não disponível") if dados_usuario else "Erro ao carregar dados"
     cod_analista = dados_usuario.get("CODVEN", "codigo não disponível") if dados_usuario else "Erro ao carregar dados"
@@ -70,6 +71,7 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
+        codColigada = coligada,
         codigo_analista=cod_analista,
         nome=nome_usuario,
         data_de=data_de,
