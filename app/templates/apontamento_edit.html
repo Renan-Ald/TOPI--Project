@@ -155,7 +155,10 @@
                     <h2>Outras Despesas</h2>
                     <div class="form-group">
                         <label class="mb-2" for ="vlr">Valor Despesa</label>
-                        <input type="number" formtarget="currency" id="vlr" name="vlr" class="form-control" value="{{ get_apont.data.VALORDESP }}">
+                        <input type="number" step="0.01" id="vlr" name="vlr" class="form-control"
+       value="{{ (get_apont.data.VALORDESP / 100) | round(2) }}">
+
+
                     </div>
                     <div class="form-group">
                         <label class="mb-2" for ="obs">Observações Despesa</label>

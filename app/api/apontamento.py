@@ -196,7 +196,7 @@ def editar_apontamento():
         "KMINI": get_or_none("KMINI"),
         "KMFIM": get_or_none("KMFIM"),
         "TURNO": get_or_none("turno"),
-        "VALORDESP": get_or_none("vlr"),
+        "VALORDESP": int(float(request.form.get("vlr", 0)) * 100),
         "OBSDESP": get_or_none("obs"),
         "id": f"{session.get('coligada')}$_${request.form.get('cod_apontamento_get')}"
     }]

@@ -33,7 +33,12 @@
     <div class="content">
       <!-- Header -->
       <div class="header d-flex justify-content-between">
-        <h3 class="anta-regular">{% if codColigada == 1 %}CIS{% else %}TOPI{% endif %}</h3>
+        <h3 class="anta-regular">{% if codColigada|int == 1 %}
+          CIS
+        {% else %}
+          TOPI
+        {% endif %}
+        </h3>
         <div class="dropdown">
           <button
             class="dropdown-toggle"
