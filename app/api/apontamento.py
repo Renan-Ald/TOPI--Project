@@ -245,6 +245,7 @@ def apontamento_page_delete():
     token = session.get("token")
     codcoligada = request.args.get('codcoligada')
     codapontamento = request.args.get('codapontamento')
+    print("codigo apont delete"+codapontamento)
     redirect_to = request.args.get('redirect', 'dashboard')
 
     if usuario and codcoligada and token and codapontamento:
