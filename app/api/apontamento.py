@@ -154,7 +154,18 @@ def criar_apontamento():
         if response.status_code == 200:
             return redirect(url_for('routes.dashboard'))
         else:
-            return jsonify({"error": "Erro ao enviar apontamento", "detalhes": response.text}), response.status_code
+            try:
+                # Tenta extrair o 'detail' do JSON da resposta
+                messages = response.json().get("messages", [])
+                detail = messages[0].get("detail", "Erro desconhecido.") if messages else "Erro desconhecido."
+            except Exception as e:
+                detail = f"Erro ao interpretar resposta: {str(e)}"
+
+            return jsonify({
+                "error": "Erro ao enviar apontamento",
+                "detalhes": detail
+            }), response.status_code
+
         
 # Novo método para editar um apontamento
 def editar_apontamento():
