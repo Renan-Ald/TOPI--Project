@@ -104,6 +104,26 @@ def apontamento_page_edit():
         codcoligada=codcoligada,
         codapontamento=codapontamento
     )
+def apontamento_page_view():
+    """Renderiza a página de apontamento com os dados do projeto e tarefa."""
+    codcoligada = request.args.get('codcoligada')
+    codapontamento = request.args.get('codapontamento')
+    dados_projeto = projetos()
+    dados_tarefa = obter_dados_tarefa()
+    get_apont= obter_apontamento()
+    print("ENTROUUU")
+    print(get_apont)
+   
+    # Aqui você pode carregar os dados com base nos parâmetros recebidos
+
+    return render_template(
+        'apontamento_view.html',
+        get_apont=get_apont,
+        dados_projeto=dados_projeto,
+        dados_tarefa=dados_tarefa,
+        codcoligada=codcoligada,
+        codapontamento=codapontamento
+    )
 def get_or_none(field):
     value = request.form.get(field)
     return value if value and value.strip() != "" else None

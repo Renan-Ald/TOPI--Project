@@ -153,8 +153,9 @@
 </a>
 {% else %}
 <a
-  class="dropdown-item text-secondary disabled"
-  style="pointer-events: none; cursor: not-allowed;"
+  class="dropdown-item text-primary editar-link"
+  href="{{ url_for('routes.apontamento_page_edit') }}"
+  data-codapontamento="{{ item.CODAPONTAMENTO }}"
 >
   Editar
 </a>
@@ -174,13 +175,13 @@
                           Deletar
                         </a>
                       </li>
-                      {% if not item.NUMEROOS %}
                       <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
+                        <a class="dropdown-item text-success" href="{{ url_for('routes.apontamento_page_view') }}"
+                        data-codapontamento="{{ item.CODAPONTAMENTO }}">
+                          Visualizar
                         </a>
                       </li>
-                      {% endif %}
+                      
                     </ul>
                   </div>
                 </td>
