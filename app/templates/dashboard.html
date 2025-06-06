@@ -153,25 +153,28 @@
 
                       </li>
                       <li>
-                        <a
-                          class="dropdown-item text-danger delete-link"
-                          href="{{ url_for('routes.apontamento_page_delete', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO, redirect='dashboard') }}"
-                          data-codapontamento="{{ item.CODAPONTAMENTO }}"
-                          data-projeto="{{ item.PROJETO }}"
-                          data-data="{{ item.DATA }}"
-                          data-hora-inicio="{{ item.HRINI }}"
-                          data-hora-fim="{{ item.HRFIM }}"
-                        >
-                          Deletar
-                        </a>
+                        {% if not item.NUMEROOS %}
+                          <a
+                            class="dropdown-item text-danger delete-link"
+                            href="{{ url_for('routes.apontamento_page_delete', codcoligada=item.CODCOLIGADA, codapontamento=item.CODAPONTAMENTO, redirect='dashboard') }}"
+                            data-codapontamento="{{ item.CODAPONTAMENTO }}"
+                            data-projeto="{{ item.PROJETO }}"
+                            data-data="{{ item.DATA }}"
+                            data-hora-inicio="{{ item.HRINI }}"
+                            data-hora-fim="{{ item.HRFIM }}"
+                          >
+                            Deletar
+                          </a>
+                        {% else %}
+                          <a
+                            class="dropdown-item text-secondary disabled"
+                            style="pointer-events: none; cursor: not-allowed;"
+                            title="Deletar indisponível: apontamento com OS"
+                          >
+                            Deletar
+                          </a>
+                        {% endif %}
                       </li>
-                      {% if not item.NUMEROOS %}
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      {% endif %}
                     </ul>
                   </div>
                 </td>
