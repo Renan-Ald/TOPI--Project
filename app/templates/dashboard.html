@@ -134,13 +134,23 @@
                     </button>
                     <ul class="dropdown-menu">
                       <li>
-                        <a
-                          class="dropdown-item text-primary editar-link"
-                          href="{{ url_for('routes.apontamento_page_edit') }}"
-                          data-codapontamento="{{ item.CODAPONTAMENTO }}"
-                        >
-                          Editar
-                        </a>
+                        {% if not item.NUMEROOS %}
+<a
+  class="dropdown-item text-primary editar-link"
+  href="{{ url_for('routes.apontamento_page_edit') }}"
+  data-codapontamento="{{ item.CODAPONTAMENTO }}"
+>
+  Editar
+</a>
+{% else %}
+<a
+  class="dropdown-item text-secondary disabled"
+  style="pointer-events: none; cursor: not-allowed;"
+>
+  Editar
+</a>
+{% endif %}
+
                       </li>
                       <li>
                         <a
