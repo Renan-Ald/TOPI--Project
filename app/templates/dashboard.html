@@ -90,10 +90,19 @@
 
       <!-- Tabela de Resultados -->
       <div class="card mt-4 p-4">
-        <h5>Apontamento</h5>
+        <h5 class="mb-4">Apontamento</h5>
         {% if dados_periodo %}
+        <div id="searchContainer" class="mb-3" style="display: none;">
+          <div class="input-group">
+            <span class="input-group-text" id="searchColumnName"></span>
+            <input type="text" id="columnSearchInput" class="form-control" placeholder="Pesquisar...">
+            <button class="btn btn-outline-secondary" type="button" id="clearSearch">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
         <div class="results">
-          <table class="table table-striped table-bordered table-hover">
+          <table class="table table-striped table-bordered table-hover" id="mainTable">
             <thead class="align-middle">
               <tr>
                 <th>Código Coligada</th>
@@ -155,13 +164,7 @@
                           Deletar
                         </a>
                       </li>
-                      {% if not item.NUMEROOS %}
-                      <li>
-                        <a class="dropdown-item text-success" href="#">
-                          Gerar OS
-                        </a>
-                      </li>
-                      {% endif %}
+                      
                     </ul>
                   </div>
                 </td>
@@ -191,8 +194,16 @@
       </div>
     </footer>
 
+     <!-- Menu de Contexto -->
+    <div class="context-menu" id="contextMenu" style="display: none;">
+      <ul class="list-unstyled mb-0">
+        <li><a href="#" class="context-menu-item" data-action="search">Pesquisar nesta coluna</a></li>
+      </ul>
+    </div>
+
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
-    
+   
+
   </body>
 </html>

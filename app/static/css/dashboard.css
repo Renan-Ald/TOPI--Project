@@ -124,6 +124,26 @@ body {
   transform: scale(1.1);
 }
 
+.context-menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+.context-menu-item {
+  display: block;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+}
+.context-menu-item:hover {
+  background: #f8f9fa;
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .header .dropdown-toggle {
     font-size: 14px;
@@ -148,65 +168,3 @@ body {
   }
 }
 
-/* Estilos para o modal de confirmação */
-#deleteModal .modal-content {
-  border-radius: 8px;
-  background-color: #f8f9fa;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-#deletModal > button {
-  cursor: pointer;
-}
-
-#deleteModal .modal-header {
-  background-color: #ffcfcf;
-  border-bottom: 1px solid #dee2e6;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-#deleteModal .modal-title {
-  color: #343a40;
-  font-weight: 600;
-}
-
-#deleteModal .modal-body,
-#deleteModal .modal-footer {
-  background-color: #f8f9fa;
-}
-
-
-
-#deleteModal .alert-warning {
-  background-color: #fff3cd;
-  border-color: #ffeeba;
-  color: #856404;
-  border-radius: 6px;
-  padding: 15px;
-  margin-top: 15px;
-}
-
-#deleteModal .list-unstyled li {
-  margin-bottom: 8px;
-}
-
-#deleteModal .btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
-  transition: all 0.3s ease;
-}
-
-#deleteModal .btn-danger:hover {
-  background-color: #c82333;
-  border-color: #bd2130;
-}
-
-#deleteModal .btn-danger.disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-#deleteModal .spinner-border {
-  margin-right: 8px;
-}
