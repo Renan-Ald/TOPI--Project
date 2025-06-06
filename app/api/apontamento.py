@@ -130,7 +130,7 @@ def criar_apontamento():
             "HRFIM": f"{request.form.get('data')}T{request.form.get('hr_fim')}:00-03:00",
             "HRINT": f"{request.form.get('data')}T{request.form.get('hr_int')}:00-03:00",
             "DESCRICAO": request.form.get("descricao"),
-            "CODTB1FAT": int(request.form.get("cod_apontamento")),
+            "CODTB1FAT": str(request.form.get("cod_apontamento")),
             "PLACA": get_or_none("placa"),           # Vai ser None se o campo estiver vazio
             "TIPOVEIC": get_or_none("veiculo"),      # Mesmo aqui
             "KMINI": get_or_none("KMINI"),
