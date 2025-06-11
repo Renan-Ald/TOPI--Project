@@ -60,18 +60,31 @@ def dashboard():
     dados_usuario = obter_dados_usuario()
     nome_usuario = dados_usuario.get("NOME", "Nome não disponível") if dados_usuario else "Erro ao carregar dados"
     cod_analista = dados_usuario.get("CODVEN", "codigo não disponível") if dados_usuario else "Erro ao carregar dados"
-    # Obtém as datas, usando as do mês atual por padrão
+    
+    # Primeiro verifica se veio algo pela URL (GET)
     data_de = request.args.get("data_de")
     data_ate = request.args.get("data_ate")
-
+    
+    # Se o usuário enviou novas datas, atualiza na sessão
+    if data_de and data_ate:
+        session['filtro_data_de'] = data_de
+        session['filtro_data_ate'] = data_ate
+    else:
+        # Se não veio nada da URL, tenta pegar da sessão
+        data_de = session.get('filtro_data_de')
+        data_ate = session.get('filtro_data_ate')
+    
+    # Se ainda não tiver datas (primeiro acesso), usa o mês atual
     if not data_de or not data_ate:
         data_de, data_ate = get_mes_atual()
+        session['filtro_data_de'] = data_de
+        session['filtro_data_ate'] = data_ate
 
     dados_periodo = obter_dados_periodo(data_de, data_ate)
 
     return render_template(
         "dashboard.html",
-        codColigada = coligada,
+        codColigada=coligada,
         codigo_analista=cod_analista,
         nome=nome_usuario,
         data_de=data_de,
