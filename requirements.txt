@@ -4,3 +4,4 @@ PyJWT==2.8.0
 dotenv
 flask_cors
 flask_jwt_extended
+waitress
