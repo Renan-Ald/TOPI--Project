@@ -30,7 +30,7 @@ routes.route("/apontamento", methods=["GET", "POST"])(apontamento_page)
 
 # Edição de apontamento
 # GET para carregar formulário, PUT para salvar (usando JS com _method=PUT ou formulário real PUT via fetch)
-routes.route("/apontamento_edit", methods=["GET", "PUT"])(apontamento_page_edit)
+routes.route("/apontamento_edit/<cod>", methods=["GET", "PUT"])(apontamento_page_edit)
 routes.route("/apontamento_view", methods=["GET", "PUT"])(apontamento_page_view)
 
 # Exclusão de apontamento

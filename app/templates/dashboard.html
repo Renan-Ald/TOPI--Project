@@ -146,15 +146,15 @@
                         {% if not item.NUMEROOS %}
 <a
   class="dropdown-item text-primary editar-link"
-  href="{{ url_for('routes.apontamento_page_edit') }}"
-  data-codapontamento="{{ item.CODAPONTAMENTO }}"
+  href="{{ url_for('routes.apontamento_page_edit', cod=hashids.encode(item.CODAPONTAMENTO)) }}"
 >
   Editar
 </a>
+
 {% else %}
 <a
   class="dropdown-item text-primary editar-link"
-  href="{{ url_for('routes.apontamento_page_edit') }}"
+  href="{{ url_for('routes.apontamento_page_edit', cod=hashids.encode(item.CODAPONTAMENTO)) }}"
   data-codapontamento="{{ item.CODAPONTAMENTO }}"
 >
   Editar

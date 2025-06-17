@@ -1,6 +1,6 @@
 from flask import render_template, request, jsonify, session, url_for, redirect
 import requests
-
+from app import hashids
 # Definindo a URL base
 BASE_API_URL = "https://portal.topiconsultoria.com.br:8051/api/framework/v1/consultaSQLServer/RealizaConsulta/"
 API_URL = "https://portal.topiconsultoria.com.br:8051/RMSRestDataServer/rest/RMSPRJ4728832Server"
@@ -53,21 +53,6 @@ def obter_apontamentos(cod_projeto):
             return response.json() if isinstance(response.json(), list) else []
     return []
 
-def obter_apontamento(codapontamento):
-    """Obtém os apontamentos filtrados pelo CODPROJETO."""
-    usuario = session.get("user")
-    coligada = session.get("coligada")
-    token = session.get("token")
-    print("entrou no apontamento")
-    if usuario and coligada and token:
-        url = f"{API_URL}/{coligada}$_${codapontamento}"
-        headers = {"Authorization": f"Bearer {token}"}
-        response = requests.get(url, headers=headers)
-        print("entrou no primeir if")
-        if response.status_code == 200:
-            print("segundo")
-            return response.json() if isinstance(response.json(), list) else []
-    return []
 
 def get_apontamentos():
     """Endpoint para retornar apontamentos com base no CODPROJETO."""
@@ -85,13 +70,18 @@ def apontamento_page():
 
     return render_template('apontamento.html', dados_projeto=dados_projeto, dados_tarefa=dados_tarefa)
 
-def apontamento_page_edit():
+def apontamento_page_edit(cod):
     """Renderiza a página de apontamento com os dados do projeto e tarefa."""
+    decoded = hashids.decode(cod)
+    if not decoded:
+        return redirect(url_for("routes.login"))  # ou 404
+
+    codapontamento = decoded[0]
+    print("codigo apontamento url",codapontamento)
     codcoligada = request.args.get('codcoligada')
-    codapontamento = request.args.get('codapontamento')
     dados_projeto = projetos()
     dados_tarefa = obter_dados_tarefa()
-    get_apont= obter_apontamento()
+    get_apont= obter_apontamento(codapontamento)
     print(get_apont)
    
     # Aqui você pode carregar os dados com base nos parâmetros recebidos
@@ -216,7 +206,7 @@ def editar_apontamento():
         "KMINI": get_or_none("KMINI"),
         "KMFIM": get_or_none("KMFIM"),
         "TURNO": get_or_none("turno"),
-        "VALORDESP": int(float(request.form.get("vlr", 0)) * 100),
+        "VALORDESP": float(request.form.get("vlr") or 0),
         "OBSDESP": get_or_none("obs"),
         "id": f"{session.get('coligada')}$_${request.form.get('cod_apontamento_get')}"
     }]
@@ -235,11 +225,12 @@ def editar_apontamento():
             
         else:
             return jsonify({"error": "Erro ao editar apontamento", "detalhes": response.text}), response.status_code
-def obter_apontamento():
+def obter_apontamento(cod):
     """Obtém os detalhes de um apontamento específico para edição."""
     token = session.get("token")
     cod_coligada = session.get("coligada")
-    cod_apontamento = session.get("codapontamento")
+    cod_apontamento = cod
+    print("TOKEN:" , token,"COLIGADA: " ,cod_coligada, "Apontamento: ",cod_apontamento)
     if not token:
         return jsonify({"error": "Usuário não autenticado"}), 401
 
