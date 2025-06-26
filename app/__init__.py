@@ -64,7 +64,7 @@ def create_app():
     CORS(app)
     JWTManager(app)
 
-    Session(app)  # <-- Habilita o server-side session aqui
+    #Session(app)  # <-- Habilita o server-side session aqui
 
     from app.routes import routes
     app.register_blueprint(routes)

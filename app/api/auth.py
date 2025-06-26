@@ -12,7 +12,7 @@ def autenticar_usuario(usuario, senha):
         data = response.json()
         session["token"] = data.get("access_token") 
         session["refresh_token"] = data.get("refresh_token")  
-        session["token_expira_em"] = int(time.time()) + 300  # 300 segundos (5 minutos)
+        session["token_expira_em"] = int(time.time()) + 1800  # 300 segundos (5 minutos)
         session["ultima_atividade"] = int(time.time())  # Atualiza atividade
         return data  
 
@@ -42,7 +42,7 @@ def atualizar_token():
 
     if token_expira_em and refresh_token:
         tempo_atual = datetime.datetime.now().timestamp()
-        
+        print(token_expira_em)
         if tempo_atual >= token_expira_em:  # Se o token expirou
             payload = {"refresh_token": refresh_token}
             response = requests.post(Config.TOTVS_REFRESH_URL, json=payload)
@@ -50,7 +50,7 @@ def atualizar_token():
             if response.status_code == 200:
                 dados = response.json()
                 session["token"] = dados.get("access_token")
-                session["token_expira_em"] = tempo_atual + 300  # Atualiza a expiração
+                session["token_expira_em"] = tempo_atual + 1800  # Atualiza a expiração
                 return True
             else:
                 session.clear()  # Se falhar, desloga o usuário
